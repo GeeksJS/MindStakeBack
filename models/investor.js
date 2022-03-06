@@ -4,13 +4,13 @@ var adressuser = require('./adress');
 var investor = new mongoose.Schema(
     {
        CompanyName: String,
-       address: {
+       Address: {
         street: String,
         city: String,
         code: String,
         country: String
     },
-       user:{type: mongoose.Schema.Types.ObjectId,ref:'users'}
+       User:{type: mongoose.Schema.Types.ObjectId,ref:'users'}
     }
 )
 module.exports = mongoose.model('investors', investor)

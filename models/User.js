@@ -13,7 +13,4 @@ var user = new mongoose.Schema(
         Phone: Number
     }
 )
-/*user.pre('save', function() {
-    const user = this;
-})*/
 module.exports = mongoose.model('users', user)

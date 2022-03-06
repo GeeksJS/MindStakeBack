@@ -17,8 +17,8 @@ var project = new mongoose.Schema(
         Video : String,
         SocialMedia:String,
         Approved:Boolean,
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
-        payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
+        User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+        Payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
     }
 )
 module.exports = mongoose.model('projects', project)
