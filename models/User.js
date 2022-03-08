@@ -24,6 +24,29 @@ var user = new mongoose.Schema(
             type: Number,
             required: false
         },
+        StartupName: {
+            type: String,
+            required: false
+        },
+        Cv: {
+            type: String,
+            required: false
+        },
+        Typecreator: {
+            type: String,
+
+            enum: ["STARTUP", "INDIVIDUAL"]
+
+        }, CompanyName: {
+            type: String,
+            required: false
+        },
+        Address: {
+            street: String,
+            city: String,
+            code: String,
+            country: String
+        },
     }
 )
 module.exports = mongoose.model('users', user)
