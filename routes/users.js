@@ -15,10 +15,12 @@ var UserService = require('../Service/UserService')
 //   res.send('respond with a resource');
 // });
 /*begin Simple Crud User*/
-/* Getting One by Id*/
-router.post('/addUser', function (req, res, next) {
-  UserService.addUser(req.body);
+router.get('/add', function (req, res, next) {
+ UserService.addUser(req.body);
 });
+
+/* Getting One by Id*/
+
 /*find User By Id*/
 router.get('/:id', function (req, res, next) {
   var id = req.params.id;
@@ -49,40 +51,13 @@ router.post('/update/:id', function (req, res, next) {
 router.delete('/delete/:id', function (req, res, next) {
   var id = req.params.id;
   User.findOneAndRemove({ _id: id }, (err) => {
-    if (err) throw err;
+      if (err) throw err;
   })
 });
-/*Get All Users*/
 router.get('/', function (req, res, next) {
   User.find(function (err, data) {
     if (err) throw err;
     res.json(data);
-  });
 });
-/*Get By Role */
-router.get('/Role/:Role', function (req, res, next) {
-  var role = req.params.Role;
-  User.find({ Role: role }, function (err, data) {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-/*Get By Emain and Password */
-router.post('/LoginE', function (req, res, next) {
-  var password = req.body.Password;
-  var email = req.body.Email;
-  User.find({ Password: password, Email: email }, function (err, data) {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-/*Get By Username and Password */
-router.post('/LoginU', function (req, res, next) {
-  var username = req.body.UserName;
-  var email = req.body.Email;
-  User.find({ Password: password, UserName: username }, function (err, data) {
-    if (err) throw err;
-    res.json(data);
-  });
 });
 module.exports = router;

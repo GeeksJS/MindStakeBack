@@ -3,8 +3,14 @@ var shema = mongoose.Schema;
 var adressuser = require('./adress');
 var creator = new mongoose.Schema(
     {
-        StartupName: String,
-        Cv:String,
+        StartupName: {
+            type: String,
+            required: true
+        },
+        Cv:{
+            type: String,
+            required: true
+        },
         Typecreator: {
             type: String,
             enum: ["STARTUP", "INDIVIDUAL"],

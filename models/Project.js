@@ -2,21 +2,51 @@ var mongoose = require('mongoose');
 var shema = mongoose.Schema;
 var project = new mongoose.Schema(
     {
-        Description: String,
-        Title:String,
+        Description: {
+            type: String,
+            required: true
+        },
+        Title: {
+            type: String,
+            required: true
+        },
         Category: {
             type: String,
-            enum: ['Art','Illustrations','Technologie','Cinema','Creations','Gaming','Music','Other'],
+            enum: ['Art', 'Illustrations', 'Technologie', 'Cinema', 'Creations', 'Gaming', 'Music', 'Other'],
             default: 'Other'
         },
-        CreationDate:Date,
-        EndDate:Date,
-        Goal: Number,
-        Raised:Number,
-        Picture:String,
-        Video : String,
-        SocialMedia:String,
-        Approved:Boolean,
+        CreationDate: {
+            type: Date,
+            default: Date.now,
+        },
+        EndDate: {
+            type: Date,
+            required: false
+        },
+        Goal: {
+            type: Number,
+            required: true
+        },
+        Raised: {
+            type: Number,
+            required: false
+        },
+        Picture: {
+            type: String,
+            required: true
+        },
+        Video: {
+            type: String,
+            required: false
+        },
+        SocialMedia: {
+            type: String,
+            required: false
+        },
+        Approved: {
+            type: Boolean,
+            default: false
+        },
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
         Payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
     }
