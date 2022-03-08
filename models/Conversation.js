@@ -2,8 +2,14 @@ var mongoose = require('mongoose');
 var shema = mongoose.Schema;
 var conversation = new mongoose.Schema(
     {
-        Body: String,
-        CreationTime:Date,
+        Body: {
+            type: String,
+            required: true
+        },
+        CreationTime:{
+            type: Date,
+            default: Date.now,
+        },
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
        
 

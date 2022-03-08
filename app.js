@@ -9,9 +9,8 @@ var usersRouter = require('./routes/users');
 
 //Database acccess
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/mindstacke", {useNewUrlParser: true, useUnifiedTopology: true},()=>{
-
-});
+mongoose.connect("mongodb://localhost:27017/mindstacke", {useNewUrlParser: true, useUnifiedTopology: true}, 
+()=>console.log("success connection with DB"));
 
 
 

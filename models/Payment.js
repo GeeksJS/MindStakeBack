@@ -2,8 +2,14 @@ var mongoose = require('mongoose');
 var shema = mongoose.Schema;
 var payment = new mongoose.Schema(
     {
-        DatePayment: Date,
-        Amount:Number,
+        DatePayment: {
+            type: Date,
+            default: Date.now
+        },
+        Amount:{
+            type: Number,
+            required: true
+        },
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
     }
 )
