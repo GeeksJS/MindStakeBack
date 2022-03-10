@@ -1,0 +1,34 @@
+var express = require('express');
+var router = express.Router();
+var ComplaintService = require('../Service/ComplaintService');
+
+/*begin Simple Crud Complaint*/
+
+/* AddSimpleComplaint */
+router.post('/addComplaint', function (req, res, next) {
+  ComplaintService.addComplaint(req.body);
+});
+
+/*find Complaint By Id*/
+router.get('/:id', function (req, res, next) {
+   ComplaintService.displayComplaintById(req.params.id).then(data => res.json(data));
+});
+
+/*Update Complaint By Id*/
+router.post('/update/:id', function (req, res, next) {
+  var id = req.params.id;
+  ComplaintService.updateComplaint(req.body,req.params.id);
+
+});
+
+/*Delete Complaint By Id*/
+router.delete('/delete/:id', function (req, res, next) {
+  var id = req.params.id;
+  ComplaintService.deleteComplaintById(id);
+});
+
+/* find All Complaints*/
+router.get('/', function (req, res, next) {
+  ComplaintService.displayAllComplaint().then(data => res.json(data));;
+});
+module.exports = router;

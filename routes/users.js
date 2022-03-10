@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/User');
 var UserService = require('../Service/UserService');
 
 /*begin Simple Crud User*/
