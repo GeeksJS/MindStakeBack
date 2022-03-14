@@ -10,7 +10,7 @@ var conversation = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
-        User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+        Pair: { type: mongoose.Schema.Types.ObjectId, ref: 'pairs' },
        
 
     }
