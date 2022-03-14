@@ -47,6 +47,10 @@ var user = new mongoose.Schema(
             code: String,
             country: String
         },
+        ImageProfile: {
+            type: String,
+            required: false
+        }
     }
 )
 module.exports = mongoose.model('users', user)

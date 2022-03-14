@@ -1,8 +1,31 @@
 var express = require('express');
 var router = express.Router();
 var UserService = require('../Service/UserService');
+const { check } = require('express-validator')
+const imageUpload = require('../middleware/image-upload')
+
 
 /*begin Simple Crud User*/
+
+router.post('/signup',imageUpload.single('image'), function(req,res){
+  console.log(req.file.filename)
+  console.log(req.body)
+
+  UserService.signup(req,res).then(data=>res.json(data)).catch(err=>console.log(err))
+}
+);
+
+
+router.post('/login', function(req,res){
+ 
+  UserService.login(req,res).then(data=>res.json(data)).catch(err=>console.log(err))
+}
+);
+
+
+
+
+
 
 /* AddSimpleUser */
 router.post('/addUser', function (req, res, next) {

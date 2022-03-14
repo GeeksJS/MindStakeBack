@@ -11,7 +11,7 @@ var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
 //Database acccess
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/mindstacke", {useNewUrlParser: true, useUnifiedTopology: true}, 
+mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, useUnifiedTopology: true}, 
 ()=>console.log("success connection with DB"));
 
 
@@ -20,7 +20,21 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'twig');
+app.set('view engine', 'jade');
+
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+
+  next();
+});
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -48,5 +62,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.set('port',process.env.PORT)
 
 module.exports = app;
