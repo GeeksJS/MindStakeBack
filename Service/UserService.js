@@ -16,11 +16,12 @@ async function signup(req, res) {
     Email,
     Password,
     Role,
-    StartupName,
     Cv,
+    StartupName,
     Typecreator,
     CompanyName,
-    Address } = req.body;
+    Address,
+    ImageProfile } = req.body;
 
 
   // Validate user input
@@ -41,19 +42,19 @@ async function signup(req, res) {
       //Encrypt user password
       encryptedPassword = await bcrypt.hash(Password, 10);
 
-      
-      
+
+
       const createdUser = new User({
         UserName,
         Email,
         Password: encryptedPassword,
         Role,
         StartupName,
-        Cv,
+        Cv: req.files && req.files[0].filename.substring(req.files[0].filename.length-3,req.files[0].filename.length)==='pdf'? req.files[0].filename : req.files[1].filename,
         Typecreator,
         CompanyName,
         Address,
-        ImageProfile: req.file? req.file.filename : "avatar.png"
+        ImageProfile: req.files && req.files[1].filename.substring(req.files[1].filename.length-3,req.files[1].filename.length)!=='pdf'? req.files[1].filename : req.files[0].filename,
       });
 
 
@@ -70,7 +71,7 @@ async function signup(req, res) {
       console.log(token)
 
 
-      return {createdUser:createdUser,token:token};
+      return { createdUser: createdUser, token: token };
     }
 
   }
@@ -81,7 +82,7 @@ async function signup(req, res) {
 
 
 
-async function login(req, res)  {
+async function login(req, res) {
   const { Email, Password } = req.body;
 
   let existingUser;
@@ -93,7 +94,7 @@ async function login(req, res)  {
       'Logging in failed, please try again later.',
       500
     );
-    return {message:error.message,code:error.code};
+    return { message: error.message, code: error.code };
   }
 
   if (!existingUser) {
@@ -101,7 +102,7 @@ async function login(req, res)  {
       'Invalid credentials, could not log you in.',
       403
     );
-    return {message:error.message,code:error.code};
+    return { message: error.message, code: error.code };
   }
 
   let isValidPassword = false;
@@ -112,7 +113,7 @@ async function login(req, res)  {
       'Could not log you in, please check your credentials and try again.',
       500
     );
-    return {message:error.message,code:error.code};
+    return { message: error.message, code: error.code };
   }
 
   if (!isValidPassword) {
@@ -120,7 +121,7 @@ async function login(req, res)  {
       'Invalid credentials, could not log you in.',
       403
     );
-    return {message:error.message,code:error.code};
+    return { message: error.message, code: error.code };
   }
 
   let token;
@@ -135,7 +136,7 @@ async function login(req, res)  {
       'Logging in failed, please try again later.',
       500
     );
-    return {message:error.message,code:error.code};
+    return { message: error.message, code: error.code };
   }
 
   res.json({
