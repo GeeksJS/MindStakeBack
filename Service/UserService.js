@@ -20,8 +20,7 @@ async function signup(req, res) {
     Cv,
     Typecreator,
     CompanyName,
-    Address,
-    ImageProfile } = req.body;
+    Address } = req.body;
 
 
   // Validate user input
@@ -43,7 +42,7 @@ async function signup(req, res) {
       encryptedPassword = await bcrypt.hash(Password, 10);
 
       
-
+      
       const createdUser = new User({
         UserName,
         Email,
@@ -54,7 +53,7 @@ async function signup(req, res) {
         Typecreator,
         CompanyName,
         Address,
-        ImageProfile: req.file.filename
+        ImageProfile: req.file? req.file.filename : "avatar.png"
       });
 
 

@@ -7,8 +7,7 @@ const imageUpload = require('../middleware/image-upload')
 
 /*begin Simple Crud User*/
 
-router.post('/signup',imageUpload.single('image'), function(req,res){
-  console.log(req.file.filename)
+router.post('/signup',imageUpload.single('ImageProfile'), function(req,res){
   console.log(req.body)
 
   UserService.signup(req,res).then(data=>res.json(data)).catch(err=>console.log(err))
