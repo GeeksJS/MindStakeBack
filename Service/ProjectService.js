@@ -19,7 +19,7 @@ var project = new Project({
     Approved: false,
     User: projectData.idUser,
     Payment:  []
-});
+}); 
    //save project with mongoose
   project.save();
 };

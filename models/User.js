@@ -17,8 +17,8 @@ var user = new mongoose.Schema(
         },
         Role: {
             type: String,
-            enum: ["SIMPLE_USER", "CREATOR", "INVESTOR", "ADMIN"],
-            default: 'SIMPLE_USER'
+            enum: ["SimpleUser", "Creator", "Investor", "ADMIN"],
+            default: 'SimpleUser'
         },
         Phone: {
             type: Number,
@@ -35,7 +35,7 @@ var user = new mongoose.Schema(
         Typecreator: {
             type: String,
 
-            enum: ["STARTUP", "INDIVIDUAL"]
+            enum: ["Startup", "Individual"]
 
         }, CompanyName: {
             type: String,
@@ -49,6 +49,11 @@ var user = new mongoose.Schema(
         },
         ImageProfile: {
             type: String,
+            required: false
+        },
+        isActivated: {
+            type: Boolean,
+            default:false,
             required: false
         }
     }

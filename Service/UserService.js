@@ -7,6 +7,8 @@ const { validationResult } = require('express-validator')
 
 const imageUpload = require('../middleware/image-upload')
 
+const multer = require('multer')
+
 
 
 async function signup(req, res) {
@@ -18,10 +20,12 @@ async function signup(req, res) {
     Role,
     Cv,
     StartupName,
+    Phone,
     Typecreator,
     CompanyName,
     Address,
-    ImageProfile } = req.body;
+    ImageProfile,
+    isActivated } = req.body;
 
 
   // Validate user input
@@ -42,6 +46,20 @@ async function signup(req, res) {
       //Encrypt user password
       encryptedPassword = await bcrypt.hash(Password, 10);
 
+      const pdf = () => {
+        if (req.files) {
+          if (req.files[1]) {
+            return req.files[1].filename
+          }
+          else if (req.files[0].mimetype === "application/pdf") {
+            return req.files[0].filename
+
+          }
+          else {
+            return "default.pdf"
+          }
+        }
+      }
 
 
       const createdUser = new User({
@@ -50,11 +68,14 @@ async function signup(req, res) {
         Password: encryptedPassword,
         Role,
         StartupName,
-        Cv: req.files && req.files[0].filename.substring(req.files[0].filename.length-3,req.files[0].filename.length)==='pdf'? req.files[0].filename : req.files[1].filename,
+        ImageProfile: req.files && req.files[0].mimetype !== "application/pdf" ? req.files[0].filename : 'avatar.png',
+        Cv: pdf(),
         Typecreator,
+        Phone,
         CompanyName,
         Address,
-        ImageProfile: req.files && req.files[1].filename.substring(req.files[1].filename.length-3,req.files[1].filename.length)!=='pdf'? req.files[1].filename : req.files[0].filename,
+        isActivated
+
       });
 
 
@@ -71,7 +92,9 @@ async function signup(req, res) {
       console.log(token)
 
 
-      return { createdUser: createdUser, token: token };
+      return { Email: createdUser.Email,UserName: createdUser.UserName,Password: createdUser.Password,Role: createdUser.Role,
+        StartupName: createdUser.StartupName,ImageProfile: createdUser.ImageProfile,Cv: createdUser.Cv,Typecreator: createdUser.Typecreator,
+        Phone: createdUser.Phone,CompanyName: createdUser.CompanyName,Address: createdUser.Address,isActivated: createdUser.isActivated, token: token };
     }
 
   }
