@@ -11,7 +11,7 @@ const fileUpload = require('../middleware/image-upload');
 
 router.post('/signup', fileUpload.any(), function (req, res) {
   console.log(req.body)
-  console.log("file" + req.file)
+  console.log("file" + req.files[0].filename)
   //res.end()
 
   UserService.signup(req,res).then(data=>res.json(data)).catch(err=>console.log(err))

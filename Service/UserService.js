@@ -39,7 +39,7 @@ async function signup(req, res) {
     const oldUser = await User.findOne({ Email });
 
     if (oldUser) {
-      return console.log("User Already Exist. Please Login");
+      return null;
     }
     else {
 
@@ -78,9 +78,7 @@ async function signup(req, res) {
 
       });
 
-
       let token;
-
       token = jwt.sign(
         { userId: createdUser._id },
         'supersecret_dont_share',
