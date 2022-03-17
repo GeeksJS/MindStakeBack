@@ -6,17 +6,44 @@ var project = new mongoose.Schema(
         Title:String,
         Category: {
             type: String,
-            enum: ['Art','Illustrations','Technologie','Cinema','Creations','Gaming','Music','Other'],
+
+            enum: ['Art', 'Illustrations', 'Technology', 'Cinema', 'Creation', 'Gaming', 'Music', 'Other'],
             default: 'Other'
         },
-        CreationDate:Date,
-        EndDate:Date,
-        Goal: Number,
-        Raised:Number,
-        Picture:String,
-        Video : String,
-        SocialMedia:String,
-        Approved:Boolean,
+        CreationDate: {
+            type: Date,
+            default: Date.now,
+        },
+        EndDate: {
+            type: Date,
+            required: false
+        },
+        Goal: {
+            type: Number,
+            required: true
+        },
+        Raised: {
+            type: Number,
+            required: false,
+            default: 0
+        },
+        Picture: {
+            type: String,
+            required: true
+        },
+        Video: {
+            type: String,
+            required: false
+        },
+        SocialMedia: {
+            type: String,
+            required: false
+        },
+        Approved: {
+            type: Boolean,
+            default: false
+        },
+
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
         Payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
     }
