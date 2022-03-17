@@ -2,12 +2,20 @@ var mongoose = require('mongoose');
 var shema = mongoose.Schema;
 var project = new mongoose.Schema(
     {
-        Description: String,
-        Title:String,
+        Description: {
+            type: String,
+            required: true
+        },
+        Title: {
+            type: String,
+            required: true
+        },
         Category: {
             type: String,
 
+
             enum: ['Art', 'Illustrations', 'Technology', 'Cinema', 'Creation', 'Gaming', 'Music', 'Other'],
+
             default: 'Other'
         },
         CreationDate: {
@@ -24,8 +32,10 @@ var project = new mongoose.Schema(
         },
         Raised: {
             type: Number,
+
             required: false,
             default: 0
+
         },
         Picture: {
             type: String,

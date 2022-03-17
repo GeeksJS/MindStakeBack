@@ -90,11 +90,13 @@ async function signup(req, res) {
       console.log(token)
 
 
+
       return {
         Email: createdUser.Email, UserName: createdUser.UserName, Password: createdUser.Password, Role: createdUser.Role,
         StartupName: createdUser.StartupName, ImageProfile: createdUser.ImageProfile, Cv: createdUser.Cv, Typecreator: createdUser.Typecreator,
         Phone: createdUser.Phone, CompanyName: createdUser.CompanyName, Address: createdUser.Address, isActivated: createdUser.isActivated, token: token
       };
+
     }
 
   }
@@ -163,9 +165,11 @@ async function login(req, res) {
   }
 
   res.json({
+
     userId: existingUser._id , Email: existingUser.Email, UserName: existingUser.UserName, Role: existingUser.Role,
     StartupName: existingUser.StartupName, ImageProfile: existingUser.ImageProfile, Cv: existingUser.Cv, Typecreator: existingUser.Typecreator,
     Phone: existingUser.Phone, CompanyName: existingUser.CompanyName, Address: existingUser.Address, isActivated: existingUser.isActivated, token: token
+
   });
 };
 

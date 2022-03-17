@@ -2,9 +2,18 @@ var mongoose = require('mongoose');
 var shema = mongoose.Schema;
 var companydetails = new mongoose.Schema(
     {
-        serviceFee: Number,
-        LowDebt: Number,
-        TypeOfLoan:Boolean,
+        serviceFee: {
+            type: Number,
+            required: true
+        },
+        LowDebt: {
+            type: NUmber,
+            required: true
+        },
+        TypeOfLoan: {
+            type: Number,
+            required: true
+        },
         Address: {
             street: String,
             city: String,
@@ -13,10 +22,13 @@ var companydetails = new mongoose.Schema(
         },
         FundingType: {
             type: String,
-            enum: ['REWARD','DEBT','EQUITY'],
+            enum: ['REWARD', 'DEBT', 'EQUITY'],
             default: 'DEBT'
         },
-        CompanyName:String,      
+        CompanyName: {
+            type: String,
+            required: true
+        },
     }
 )
 module.exports = mongoose.model('companydetails', companydetails)

@@ -2,12 +2,30 @@ var mongoose = require('mongoose');
 var shema = mongoose.Schema;
 var pack = new mongoose.Schema(
     {
-        Description: String,
-        Level:Number,
-        Price:Number,
-        Title:Stirng,
-        Duration:Number,
-        Available:boolean,
+        Description: {
+            type: String,
+            required: true
+        },
+        Level:{
+            type: Number,
+            required: true
+        },
+        Price:{
+            type: Number,
+            required: true
+        },
+        Title:{
+            type: String,
+            required: true
+        },
+        Duration:{
+            type: Number,
+            required: true
+        },
+        Available:{
+            type: Boolean,
+            default: true
+        },
         Payment: [ { type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
     }
 )
