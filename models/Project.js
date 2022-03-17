@@ -12,7 +12,10 @@ var project = new mongoose.Schema(
         },
         Category: {
             type: String,
-            enum: ['Art', 'Illustrations', 'Technologie', 'Cinema', 'Creations', 'Gaming', 'Music', 'Other'],
+
+
+            enum: ['Art', 'Illustrations', 'Technology', 'Cinema', 'Creation', 'Gaming', 'Music', 'Other'],
+
             default: 'Other'
         },
         CreationDate: {
@@ -29,7 +32,10 @@ var project = new mongoose.Schema(
         },
         Raised: {
             type: Number,
-            required: false
+
+            required: false,
+            default: 0
+
         },
         Picture: {
             type: String,
@@ -47,6 +53,7 @@ var project = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
         Payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
     }

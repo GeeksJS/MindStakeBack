@@ -1,52 +1,85 @@
 const Project = require('../models/Project')
 
 // addproject methode
- const addProject = (projectData,idUser)=>{
+function addProject(req, idUser) {
     //initialise project with arguments
 
-    
-var project = new Project({
-    Description: projectData.Description,
-    Title: projectData.Title,
-    Category: projectData.Category,
-    CreationDate: Date.now() ,
-    EndDate: projectData.EndDate ,
-    Goal: projectData.Goal,
-    Raised: 0,
-    Picture: projectData.Picture ,
-    Video: projectData.Video ,
-    SocialMedia: projectData.SocialMedia,
-    Approved: false,
-    User: projectData.idUser,
-    Payment:  []
-}); 
-   //save project with mongoose
-  project.save();
+    const {
+        Description,
+        Title,
+        Category,
+        EndDate,
+        Goal,
+        Raised,
+        Picture,
+        Video,
+        Approved,
+        SocialMedia } = req.body;
+
+    const vid = () => {
+        if (req.files) {
+            if (req.files[1]) {
+                return req.files[1].filename
+            }
+            else if (req.files[0].mimetype === "video/mp4") {
+                return req.files[0].filename
+
+            }
+            else {
+                return "video.mp4"
+            }
+        }
+    }
+
+    var project = new Project({
+        Description,
+        Title,
+        Category,
+        CreationDate: Date.now(),
+        EndDate,
+        Goal,
+        Raised,
+        Picture: req.files && req.files[0].mimetype !== "video/mp4" ? req.files[0].filename : 'project.png',
+        Video: vid(),
+        SocialMedia,
+        Approved,
+        User: idUser,
+        Payment: []
+    });
+    //save project with mongoose
+    project.save();
 };
- const deleteProject = (idProject)=>{
-    Project.findOneAndDelete({_id:idProject}, (err) => {
+const deleteProject = (idProject) => {
+    Project.findOneAndDelete({ _id: idProject }, (err) => {
         if (err) throw err;
     })
 
 };
 
 
-const getProjectByID =async (id)=>{
+const getProjectByID = async (id) => {
     //mongoose find method return alwaus promise
-    return  await Project.find({_id: id.toString()})
-     .then(data=>result = data)
-     .catch(err=>console.log(err));
+    return await Project.find({ _id: id.toString() })
+        .then(data => result = data)
+        .catch(err => console.log(err));
 }
 
-const getAllProjects = () =>{
+const getProjectByUser = async (id) => {
+    //mongoose find method return alwaus promise
+    return await Project.find({ User: id.toString() })
+        .then(data => result = data)
+        .catch(err => console.log(err));
+}
+
+const getAllProjects = () => {
     return Project.find();
 }
 
-const updateProject = (data,idProject)=>{
-    Project.findByIdAndUpdate({_id : idProject.toString() },data);
+const updateProject = (data, idProject) => {
+    Project.findByIdAndUpdate({ _id: idProject.toString() }, data);
 }
 
-module.exports = {addProject,deleteProject,getProjectByID,getAllProjects,updateProject};
+module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject , getProjectByUser};
 
 /*
 
