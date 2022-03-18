@@ -1,11 +1,12 @@
 const Complaint = require('../models/Complaint')
 /* functio to add complaint*/
+
+
 function addComplaint(req) {
-  console.log(req);
   var newcomplaint = new Complaint({
     Description: req.Description,
     Title: req.Title,
-    Treated: req.Treated,
+    User: req.User
   });
   newcomplaint.save();
 

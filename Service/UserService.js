@@ -15,6 +15,8 @@ async function signup(req, res) {
 
 
   const { UserName,
+    FistName,
+    LastName,
     Email,
     Password,
     Role,
@@ -64,6 +66,8 @@ async function signup(req, res) {
 
       const createdUser = new User({
         UserName,
+        FistName,
+        LastName,
         Email,
         Password: encryptedPassword,
         Role,
@@ -92,7 +96,7 @@ async function signup(req, res) {
 
 
       return {
-        Email: createdUser.Email, UserName: createdUser.UserName, Password: createdUser.Password, Role: createdUser.Role,
+        userId: createdUser._id, Email: createdUser.Email, UserName: createdUser.UserName, FistName: createdUser.FistName, LastName: createdUser.LastName, Password: createdUser.Password, Role: createdUser.Role,
         StartupName: createdUser.StartupName, ImageProfile: createdUser.ImageProfile, Cv: createdUser.Cv, Typecreator: createdUser.Typecreator,
         Phone: createdUser.Phone, CompanyName: createdUser.CompanyName, Address: createdUser.Address, isActivated: createdUser.isActivated, token: token
       };
@@ -166,7 +170,7 @@ async function login(req, res) {
 
   res.json({
 
-    userId: existingUser._id , Email: existingUser.Email, UserName: existingUser.UserName, Role: existingUser.Role,
+    userId: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FistName: existingUser.FistName, LastName: existingUser.LastName, Role: existingUser.Role,
     StartupName: existingUser.StartupName, ImageProfile: existingUser.ImageProfile, Cv: existingUser.Cv, Typecreator: existingUser.Typecreator,
     Phone: existingUser.Phone, CompanyName: existingUser.CompanyName, Address: existingUser.Address, isActivated: existingUser.isActivated, token: token
 
@@ -212,23 +216,37 @@ async function displayUserById(id) {
 }
 
 /*Function Update */
-function updateUser(req, id) {
-  User.findByIdAndUpdate({ _id: id.toString() }, {
-    UserName: req.UserName,
-    Email: req.Email,
-    Password: req.Password,
-    Role: req.Role,
-    Phone: req.Phone,
-    StartupName: req.StartupName,
-    Cv: req.Cv,
-    Typecreator: req.Typecreator,
-    CompanyName: req.CompanyName,
-    Address: req.Address,
-  },
-    (err) => {
-      if (err) throw err;
-    });
+async function updateUser(req, id) {
+  let User1;
+  User1 = await User.findOne({ _id: id });
+  isValidPassword = await bcrypt.compare(req.Password, User1.Password);
+  if (!isValidPassword && req.Password != "") {
+    console.log ("Incorrect Password")
+  }else if(isValidPassword && req.Password != ""){
+    console.log("change mdp")
+    encryptedPassword = await bcrypt.hash(req.NewPassword, 10);
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      UserName: req.UserName,
+      FistName: req.FistName,
+      LastName: req.LastName,
+      Email: req.Email,
+      Password: encryptedPassword,
+      Role: req.Role,
+      Phone: req.Phone,
+      StartupName: req.StartupName,
+      Cv: req.Cv,
+      Typecreator: req.Typecreator,
+      CompanyName: req.CompanyName,
+      Address: req.Address,
+    },).then(data => data) /* mongoose find methode always return promise  */
+    .catch(err => console.log(err));
+  }
+  else{
+    await User.findByIdAndUpdate({ _id: id.toString() }, req)
+    .then(data => data) /* mongoose find methode always return promise  */
+    .catch(err => console.log(err));
 
+  }
 }
 /* Function to Delete one User*/
 function deleteUserById(id) {

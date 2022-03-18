@@ -41,10 +41,10 @@ router.get('/:id', function (req, res, next) {
 });
 
 /*Update User By Id*/
-router.post('/update/:id', function (req, res, next) {
+router.put('/update/:id', function (req, res, next) {
   var id = req.params.id;
-  UserService.updateUser(req.body, req.params.id);
-
+  UserService.updateUser(req.body, id,res);
+  res.end()
 });
 
 /*Delete User By Id*/

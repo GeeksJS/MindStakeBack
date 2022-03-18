@@ -4,7 +4,7 @@ var router = express.Router();
 var ComplaintService = require('../Service/ComplaintService');
 
 /*begin Simple Crud Complaint*/
-router.use(checkAuth)
+
 /* AddSimpleComplaint */
 router.post('/addComplaint', function (req, res, next) {
   ComplaintService.addComplaint(req.body);
