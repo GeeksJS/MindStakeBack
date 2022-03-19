@@ -177,20 +177,6 @@ async function login(req, res) {
   });
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* functio to add User*/
 function addUser(req) {
   console.log(req);
@@ -216,38 +202,75 @@ async function displayUserById(id) {
 }
 
 /*Function Update */
-async function updateUser(req, id) {
-  let User1;
-  User1 = await User.findOne({ _id: id });
-  isValidPassword = await bcrypt.compare(req.Password, User1.Password);
-  if (!isValidPassword && req.Password != "") {
-    console.log ("Incorrect Password")
-  }else if(isValidPassword && req.Password != ""){
-    console.log("change mdp")
-    encryptedPassword = await bcrypt.hash(req.NewPassword, 10);
-    await User.findByIdAndUpdate({ _id: id.toString() }, {
-      UserName: req.UserName,
-      FistName: req.FistName,
-      LastName: req.LastName,
-      Email: req.Email,
-      Password: encryptedPassword,
-      Role: req.Role,
-      Phone: req.Phone,
-      StartupName: req.StartupName,
-      Cv: req.Cv,
-      Typecreator: req.Typecreator,
-      CompanyName: req.CompanyName,
-      Address: req.Address,
-    },).then(data => data) /* mongoose find methode always return promise  */
-    .catch(err => console.log(err));
-  }
-  else{
-    await User.findByIdAndUpdate({ _id: id.toString() }, req)
-    .then(data => data) /* mongoose find methode always return promise  */
-    .catch(err => console.log(err));
+async function updateUser(req, id, res) {
+  const { UserName,
+    FistName,
+    LastName,
+    Email, 
+    Cv,
+    StartupName,
+    Phone,
+    ImageProfile,
+ } = req.body;
+  console.log(req.files)
+ 
+ 
+  if (req.files) {
+    if (req.files.length == 2 ) {
+    
+      await User.findByIdAndUpdate({ _id: id.toString() }, {
+        FistName,
+        LastName,
+        Email,
+        Phone,
+        ImageProfile: req.files[0].filename,
+        Cv: req.files[1].filename,
+        StartupName
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
 
+    } else if (req.files[0].mimetype === "application/pdf") {
+    
+      await User.findByIdAndUpdate({ _id: id.toString() }, {
+        FistName,
+        LastName,
+        Email,
+        Phone,
+        Cv: req.files[0].filename,
+        StartupName,
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
+    } else {
+      
+      await User.findByIdAndUpdate({ _id: id.toString() }, {
+        FistName,
+        LastName,
+        Email,
+        Phone,
+        ImageProfile: req.files[0].filename,
+        StartupName,
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
+    }
+
+  } else {
+  
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      FistName,
+      LastName,
+      Email,
+      Phone,
+      StartupName,
+    })
+      .then(data => data) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
   }
 }
+
+
 /* Function to Delete one User*/
 function deleteUserById(id) {
   User.findOneAndRemove({ _id: id.toString() }, (err) => {

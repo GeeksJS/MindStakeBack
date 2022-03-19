@@ -41,11 +41,14 @@ router.get('/:id', function (req, res, next) {
 });
 
 /*Update User By Id*/
-router.put('/update/:id', function (req, res, next) {
+router.put('/update/:id',  fileUpload.any(),function (req, res, next) {
   var id = req.params.id;
-  UserService.updateUser(req.body, id,res);
-  res.end()
+  console.log(req.body)
+  console.log("file aya" + req.files[0])
+  UserService.updateUser(req, id,res).then(data => res.json(data)).catch(err=>console.log(err));
+
 });
+
 
 /*Delete User By Id*/
 router.delete('/delete/:id', function (req, res, next) {
