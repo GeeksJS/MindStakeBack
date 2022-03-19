@@ -40,7 +40,7 @@ router.get('/:id', function (req, res, next) {
   UserService.displayUserById(req.params.id).then(data => res.json(data));
 });
 
-/*Update User By Id*/
+/*Update Creator By Id */
 router.put('/update/:id',  fileUpload.any(),function (req, res, next) {
   var id = req.params.id;
   console.log(req.body)
@@ -49,7 +49,28 @@ router.put('/update/:id',  fileUpload.any(),function (req, res, next) {
 
 });
 
+/*Update Investor By Id */
+router.put('/updateInvestor/:id',  fileUpload.any(),function (req, res, next) {
+  var id = req.params.id;
+  console.log(req.body)
+  console.log("file aya" + req.files[0])
+  UserService.updateInvestor(req, id,res).then(data => res.json(data)).catch(err=>console.log(err));
+});
 
+/*Update SimpleUser By Id */
+router.put('/updateSimpleUser/:id',  fileUpload.any(),function (req, res, next) {
+  var id = req.params.id;
+  console.log(req.body)
+  console.log("file aya" + req.files[0])
+  UserService.updateSimpleUser(req, id,res).then(data => res.json(data)).catch(err=>console.log(err));
+});
+
+/*****Change Password */
+router.put('/changePassword/:id', function (req, res, next) {
+  var id = req.params.id;
+  UserService.change_password(req, id,res).then(data => console.log("data ") ).catch(err=>console.log(err));
+});
+/******** */
 /*Delete User By Id*/
 router.delete('/delete/:id', function (req, res, next) {
   var id = req.params.id;
