@@ -5,11 +5,22 @@ var ComplaintService = require('../Service/ComplaintService');
 
 /*begin Simple Crud Complaint*/
 
+//router.use(checkAuth)
+
 /* AddSimpleComplaint */
 router.post('/addComplaint', function (req, res, next) {
   ComplaintService.addComplaint(req.body);
   res.end()
 });
+
+/************Achref *************/
+ 
+//Approve project
+router.put('/treatcomplaint/:id', function (req, res, next) {
+  ComplaintService.treatComplaint(req.body,req.params.id);
+  res.end()
+});
+
 
 /*find Complaint By Id*/
 router.get('/:id', function (req, res, next) {

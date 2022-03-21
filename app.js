@@ -18,6 +18,7 @@ mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, 
 mongoose.set('useFindAndModify', false);
 
 
+
 var app = express();
 
 // view engine setup

@@ -35,10 +35,7 @@ router.post('/addUser', function (req, res, next) {
   UserService.addUser(req.body);
 });
 
-/*find User By Id*/
-router.get('/:id', function (req, res, next) {
-  UserService.displayUserById(req.params.id).then(data => res.json(data));
-});
+
 
 /*Update Creator By Id */
 router.put('/update/:id',  fileUpload.any(),function (req, res, next) {
@@ -77,8 +74,25 @@ router.delete('/delete/:id', function (req, res, next) {
   UserService.deleteUserById(id);
 });
 
+/* find All Admins*/
+router.get('/admins', function (req, res, next) {
+  UserService.displayAllAdmin().then(data => res.json(data));
+});
+
+/* find All users except admin*/
+router.get('/users', function (req, res, next) {
+  UserService.displayAllUsersExceptAdmin().then(data => res.json(data));
+});
+
 /* find All Users*/
 router.get('/', function (req, res, next) {
-  UserService.displayAllUser().then(data => res.json(data));;
+  UserService.displayAllUser().then(data => res.json(data));
 });
+
+/*find User By Id*/
+router.get('/:id', function (req, res, next) {
+  UserService.displayUserById(req.params.id).then(data => res.json(data));
+});
+
+
 module.exports = router;

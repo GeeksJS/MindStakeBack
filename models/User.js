@@ -7,7 +7,7 @@ var user = new mongoose.Schema(
             type: String,
             required: true
         },
-        FistName:
+        FirstName:
         {
             type: String,
             required: true
