@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var projectRouter = require('./routes/projectRoute');
 var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
+var feedbackRouter = require('./routes/feedbackRoute');
 //Database acccess
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, useUnifiedTopology: true}, 
@@ -50,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/projects', projectRouter);
+app.use('/comments', feedbackRouter);
 app.use('/complaints', complaintRouter);
 app.use('/packs',packRouter);
 // catch 404 and forward to error handler
