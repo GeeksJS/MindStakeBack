@@ -42,4 +42,13 @@ async function displayAllComplaint() {
     .then(data => data) /* mongoose find methode always return promise  */
     .catch(err => console.log(err));
 }
-module.exports = { addComplaint, displayComplaintById, updateComplaint, deleteComplaintById, displayAllComplaint } 
+
+
+/************Achref *************/
+
+//Approve project
+async function treatComplaint (data, idComplaint) {
+  await Complaint.findByIdAndUpdate({ _id: idComplaint.toString() }, data)
+  .then(data=>data)
+}
+module.exports = { addComplaint, displayComplaintById, updateComplaint, deleteComplaintById, displayAllComplaint,treatComplaint } 

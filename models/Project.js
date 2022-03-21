@@ -26,7 +26,7 @@ var project = new mongoose.Schema(
             type: Date,
             required: false
         },
-        Goal: {
+        Goal: { 
             type: Number,
             required: true
         },
@@ -36,9 +36,9 @@ var project = new mongoose.Schema(
             required: false,
             default: 0
 
-        },
+        }, 
         Picture: {
-            type: String,
+            type: String, 
             required: true
         },
         Video: {

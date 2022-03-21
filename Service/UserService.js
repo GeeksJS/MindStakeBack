@@ -15,6 +15,8 @@ async function signup(req, res) {
 
 
   const { UserName,
+    FirstName,
+    LastName,
     Email,
     Password,
     Role,
@@ -64,6 +66,8 @@ async function signup(req, res) {
 
       const createdUser = new User({
         UserName,
+        FirstName,
+        LastName,
         Email,
         Password: encryptedPassword,
         Role,
@@ -92,7 +96,7 @@ async function signup(req, res) {
 
 
       return {
-        Email: createdUser.Email, UserName: createdUser.UserName, Password: createdUser.Password, Role: createdUser.Role,
+        userId: createdUser._id, Email: createdUser.Email, UserName: createdUser.UserName, FirstName: createdUser.FirstName, LastName: createdUser.LastName, Password: createdUser.Password, Role: createdUser.Role,
         StartupName: createdUser.StartupName, ImageProfile: createdUser.ImageProfile, Cv: createdUser.Cv, Typecreator: createdUser.Typecreator,
         Phone: createdUser.Phone, CompanyName: createdUser.CompanyName, Address: createdUser.Address, isActivated: createdUser.isActivated, token: token
       };
@@ -104,8 +108,6 @@ async function signup(req, res) {
 
 
 };
-
-
 
 async function login(req, res) {
   const { Email, Password } = req.body;
@@ -186,7 +188,6 @@ async function login(req, res) {
 
 
 
-
 /* functio to add User*/
 function addUser(req) {
   console.log(req);
@@ -243,4 +244,20 @@ async function displayAllUser() {
     .then(data => data) /* mongoose find methode always return promise  */
     .catch(err => console.log(err));
 }
-module.exports = { addUser, displayUserById, updateUser, deleteUserById, displayAllUser, signup, login } 
+
+
+/**************Achref**************/
+/* Function to Display All admins*/
+async function displayAllAdmin() {
+  return await User.find({Role: 'ADMIN'})
+  .then(data => data) /* mongoose find methode always return promise  */
+  .catch(err => console.log(err));
+}
+
+/* Function to Display All users except ADMIN*/
+async function displayAllUsersExceptAdmin() {
+  return await User.find({Role: ["SimpleUser", "Creator", "Investor"]})
+  .then(data => data) /* mongoose find methode always return promise  */
+  .catch(err => console.log(err));
+}
+module.exports = { addUser, displayUserById, updateUser, deleteUserById, displayAllUser,displayAllAdmin,displayAllUsersExceptAdmin, signup, login } 

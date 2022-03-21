@@ -14,6 +14,8 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, useUnifiedTopology: true}, 
 ()=>console.log("success connection with DB"));
 
+mongoose.set('useFindAndModify', false);
+
 
 
 var app = express();

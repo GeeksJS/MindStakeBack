@@ -49,6 +49,15 @@ router.put('/updateproject/:id', function (req, res, next) {
 
 
 
+/************Achref *************/
+ 
+//Approve project
+router.put('/approveproject/:id', function (req, res, next) {
+        ProjectService.approveProject(req.body,req.params.id);
+        res.end()
+});
+
+
 
 
 

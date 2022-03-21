@@ -79,7 +79,19 @@ const updateProject = (data, idProject) => {
     Project.findByIdAndUpdate({ _id: idProject.toString() }, data);
 }
 
-module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject , getProjectByUser};
+
+ 
+ 
+
+/************Achref *************/
+
+//Approve project
+async function approveProject (data, idProject) {
+    await Project.findByIdAndUpdate({ _id: idProject.toString() }, data)
+    .then(data=>data)
+}
+
+module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject , getProjectByUser,approveProject};
 
 /*
 
