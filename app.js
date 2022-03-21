@@ -17,6 +17,7 @@ mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, 
 
 mongoose.set('useFindAndModify', false);
 
+
 var app = express();
 
 // view engine setup
@@ -26,7 +27,11 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jade');
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+
+app.use('/uploads/cv', express.static(path.join('uploads', 'cv')));
+
 app.use('/uploads/video', express.static(path.join('uploads', 'video')));
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const HttpError = require('../models/http-error')
+const { Validator } = require('node-input-validator');
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -15,6 +16,8 @@ async function signup(req, res) {
 
 
   const { UserName,
+    FistName,
+    LastName,
     Email,
     Password,
     Role,
@@ -64,6 +67,8 @@ async function signup(req, res) {
 
       const createdUser = new User({
         UserName,
+        FistName,
+        LastName,
         Email,
         Password: encryptedPassword,
         Role,
@@ -92,7 +97,7 @@ async function signup(req, res) {
 
 
       return {
-        Email: createdUser.Email, UserName: createdUser.UserName, Password: createdUser.Password, Role: createdUser.Role,
+        userId: createdUser._id, Email: createdUser.Email, UserName: createdUser.UserName, FistName: createdUser.FistName, LastName: createdUser.LastName, Password: createdUser.Password, Role: createdUser.Role,
         StartupName: createdUser.StartupName, ImageProfile: createdUser.ImageProfile, Cv: createdUser.Cv, Typecreator: createdUser.Typecreator,
         Phone: createdUser.Phone, CompanyName: createdUser.CompanyName, Address: createdUser.Address, isActivated: createdUser.isActivated, token: token
       };
@@ -166,26 +171,12 @@ async function login(req, res) {
 
   res.json({
 
-    userId: existingUser._id , Email: existingUser.Email, UserName: existingUser.UserName, Role: existingUser.Role,
+    userId: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FistName: existingUser.FistName, LastName: existingUser.LastName, Role: existingUser.Role,
     StartupName: existingUser.StartupName, ImageProfile: existingUser.ImageProfile, Cv: existingUser.Cv, Typecreator: existingUser.Typecreator,
     Phone: existingUser.Phone, CompanyName: existingUser.CompanyName, Address: existingUser.Address, isActivated: existingUser.isActivated, token: token
 
   });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* functio to add User*/
 function addUser(req) {
@@ -211,25 +202,199 @@ async function displayUserById(id) {
     .catch(err => console.log(err));
 }
 
-/*Function Update */
-function updateUser(req, id) {
-  User.findByIdAndUpdate({ _id: id.toString() }, {
-    UserName: req.UserName,
-    Email: req.Email,
-    Password: req.Password,
-    Role: req.Role,
-    Phone: req.Phone,
-    StartupName: req.StartupName,
-    Cv: req.Cv,
-    Typecreator: req.Typecreator,
-    CompanyName: req.CompanyName,
-    Address: req.Address,
-  },
-    (err) => {
-      if (err) throw err;
-    });
+/*Function Update Creator */
+async function updateUser(req, id, res) {
+  const { UserName,
+    FistName,
+    LastName,
+    Email,
+    Cv,
+    StartupName,
+    Phone,
+    ImageProfile,
+  } = req.body;
+  console.log(req.files)
+
+
+  if (req.files) {
+    if (req.files.length == 2) {
+
+      await User.findByIdAndUpdate({ _id: id.toString() }, {
+        FistName,
+        LastName,
+        Email,
+        Phone,
+        ImageProfile: req.files[0].filename,
+        Cv: req.files[1].filename,
+        StartupName
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
+
+    } else if (req.files[0].mimetype === "application/pdf") {
+
+      await User.findByIdAndUpdate({ _id: id.toString() }, {
+        FistName,
+        LastName,
+        Email,
+        Phone,
+        Cv: req.files[0].filename,
+        StartupName,
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
+    } else {
+
+      await User.findByIdAndUpdate({ _id: id.toString() }, {
+        FistName,
+        LastName,
+        Email,
+        Phone,
+        ImageProfile: req.files[0].filename,
+        StartupName,
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
+    }
+
+  } else {
+
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      FistName,
+      LastName,
+      Email,
+      Phone,
+      StartupName,
+    })
+      .then(data => data) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  }
+}
+/************Update SimpleUser */
+
+
+async function updateSimpleUser(req, id, res) {
+  const { UserName,
+    FistName,
+    LastName,
+    Email,
+    Phone,
+    ImageProfile,
+  } = req.body;
+  console.log(req.files)
+  if (req.files) {
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      FistName,
+      LastName,
+      Email,
+      Phone,
+      ImageProfile: req.files[0].filename
+      
+    })
+      .then(data => data) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  } else {
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      FistName,
+      LastName,
+      Email,
+      Phone
+    })
+      .then(data => data) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  }
+}
+/*************************** Update Investor */
+async function updateInvestor(req, id, res) {
+  const { UserName,
+    FistName,
+    LastName,
+    Email,
+    Phone,
+    CompanyName,
+    ImageProfile,
+  } = req.body;
+  console.log(req.files)
+  if (req.files) {
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      FistName,
+      LastName,
+      Email,
+      Phone,
+      CompanyName,
+      ImageProfile: req.files[0].filename,
+      StartupName
+    })
+      .then(data => data) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  } else {
+    await User.findByIdAndUpdate({ _id: id.toString() }, {
+      FistName,
+      LastName,
+      Email,
+      CompanyName,
+      Phone
+    })
+      .then(data => data) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  }
+}
+
+/**************** */
+
+/********* Update Password*/
+
+  async function change_password(req, id, res){
+    
+	try{
+		const v = new Validator(req.body, {
+			old_Password: 'required',
+			new_Password: 'required',
+	  	confirm_Password: 'required|same:new_Password'
+		});
+
+		const matched = await v.check();
+
+		if (!matched) {
+			return res.status(422).send(v.errors);
+		}
+
+		let current_user= await User.findOne({ _id: id })
+    console.log(current_user.UserName)
+		if(bcrypt.compareSync(req.body.old_Password,current_user.Password)){
+    
+			let hashPassword=bcrypt.hashSync(req.body.new_Password,10);
+			await User.updateOne({
+				_id:current_user._id
+			},{
+				Password:hashPassword
+			});
+
+			return res.status(200).send({
+				message:'Password successfully updated',
+				data:current_user,
+			});
+
+		}else{
+			return res.status(400).send({
+				message:'Old Password does not matched',
+				data:{}
+			});
+		}
+
+
+
+	}catch(err){
+		return res.status(400).send({
+			message:err.message,
+			data:err
+		});
+	}
 
 }
+
+/****** */
+/*************** */
 /* Function to Delete one User*/
 function deleteUserById(id) {
   User.findOneAndRemove({ _id: id.toString() }, (err) => {
@@ -243,4 +408,4 @@ async function displayAllUser() {
     .then(data => data) /* mongoose find methode always return promise  */
     .catch(err => console.log(err));
 }
-module.exports = { addUser, displayUserById, updateUser, deleteUserById, displayAllUser, signup, login } 
+module.exports = { addUser, displayUserById, updateUser, deleteUserById, displayAllUser, signup, login, updateSimpleUser, updateInvestor, change_password} 

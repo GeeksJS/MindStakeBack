@@ -14,6 +14,10 @@ var complaint = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        ComplaintDate: {
+            type: Date,
+            default: Date.now,
+        },
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
     }
 )
