@@ -9,12 +9,13 @@ var usersRouter = require('./routes/users');
 var projectRouter = require('./routes/projectRoute');
 var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
+var feedbackRouter = require('./routes/feedbackRoute');
 //Database acccess
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, useUnifiedTopology: true}, 
 ()=>console.log("success connection with DB"));
 
-
+mongoose.set('useFindAndModify', false);
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jade');
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use('/uploads/video', express.static(path.join('uploads', 'video')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -49,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/projects', projectRouter);
+app.use('/comments', feedbackRouter);
 app.use('/complaints', complaintRouter);
 app.use('/packs',packRouter);
 // catch 404 and forward to error handler
