@@ -30,7 +30,7 @@ router.get('/getProjectByUser/:id', function (req, res, next) {
 });
 
 //get Project by id User
-router.get('/getproject/:id', function (req, res, next) {
+router.get('/getproject/:id',  function (req, res, next) {
         //to get value from promise u should type `.then` method and give it callBack function
          ProjectService.getProjectByID(req.params.id).then(data => res.json(data));
 });
@@ -42,8 +42,11 @@ router.get('/getallprojects', function (req, res, next) {
          ProjectService.getAllProjects().then(data=>res.json(data));
 });
 
-router.put('/updateproject/:id', function (req, res, next) {
-        ProjectService.updateProject(req.body,req.param.id);
+router.put('/updateproject/:id',fileUpload.any(), function (req, res, next) {
+        console.log(req.files)
+        ProjectService.updateProject(req,req.params.id);
+        
+        res.end()
 });
 
 
@@ -56,14 +59,6 @@ router.put('/approveproject/:id', function (req, res, next) {
         ProjectService.approveProject(req.body,req.params.id);
         res.end()
 });
-
-
-
-
-
-
-
-
 
 
 
