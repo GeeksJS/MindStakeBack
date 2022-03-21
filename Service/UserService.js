@@ -169,7 +169,7 @@ async function login(req, res) {
 
   res.json({
 
-    userId: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FistName: existingUser.FistName, LastName: existingUser.LastName, Role: existingUser.Role,
+    userId: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FirstName: existingUser.FirstName, LastName: existingUser.LastName, Role: existingUser.Role,
     StartupName: existingUser.StartupName, ImageProfile: existingUser.ImageProfile, Cv: existingUser.Cv, Typecreator: existingUser.Typecreator,
     Phone: existingUser.Phone, CompanyName: existingUser.CompanyName, Address: existingUser.Address, isActivated: existingUser.isActivated, token: token
 
@@ -204,7 +204,7 @@ async function displayUserById(id) {
 /*Function Update Creator */
 async function updateUser(req, id, res) {
   const { UserName,
-    FistName,
+    FirstName,
     LastName,
     Email,
     Cv,
@@ -219,7 +219,7 @@ async function updateUser(req, id, res) {
     if (req.files.length == 2) {
 
       await User.findByIdAndUpdate({ _id: id.toString() }, {
-        FistName,
+        FirstName,
         LastName,
         Email,
         Phone,
@@ -233,7 +233,7 @@ async function updateUser(req, id, res) {
     } else if (req.files[0].mimetype === "application/pdf") {
 
       await User.findByIdAndUpdate({ _id: id.toString() }, {
-        FistName,
+        FirstName,
         LastName,
         Email,
         Phone,
@@ -245,7 +245,7 @@ async function updateUser(req, id, res) {
     } else {
 
       await User.findByIdAndUpdate({ _id: id.toString() }, {
-        FistName,
+        FirstName,
         LastName,
         Email,
         Phone,
@@ -259,7 +259,7 @@ async function updateUser(req, id, res) {
   } else {
 
     await User.findByIdAndUpdate({ _id: id.toString() }, {
-      FistName,
+      FirstName,
       LastName,
       Email,
       Phone,
@@ -274,7 +274,7 @@ async function updateUser(req, id, res) {
 
 async function updateSimpleUser(req, id, res) {
   const { UserName,
-    FistName,
+    FirstName,
     LastName,
     Email,
     Phone,
@@ -283,7 +283,7 @@ async function updateSimpleUser(req, id, res) {
   console.log(req.files)
   if (req.files) {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
-      FistName,
+      FirstName,
       LastName,
       Email,
       Phone,
@@ -294,7 +294,7 @@ async function updateSimpleUser(req, id, res) {
       .catch(err => console.log(err));
   } else {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
-      FistName,
+      FirstName,
       LastName,
       Email,
       Phone
@@ -306,7 +306,7 @@ async function updateSimpleUser(req, id, res) {
 /*************************** Update Investor */
 async function updateInvestor(req, id, res) {
   const { UserName,
-    FistName,
+    FirstName,
     LastName,
     Email,
     Phone,
@@ -316,7 +316,7 @@ async function updateInvestor(req, id, res) {
   console.log(req.files)
   if (req.files) {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
-      FistName,
+      FirstName,
       LastName,
       Email,
       Phone,
@@ -328,7 +328,7 @@ async function updateInvestor(req, id, res) {
       .catch(err => console.log(err));
   } else {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
-      FistName,
+      FirstName,
       LastName,
       Email,
       CompanyName,
