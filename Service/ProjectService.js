@@ -1,4 +1,5 @@
 const Project = require('../models/Project')
+const fileUpload = require('../middleware/image-upload');
 
 // addproject methode
 function addProject(req, idUser) {
@@ -49,6 +50,78 @@ function addProject(req, idUser) {
     //save project with mongoose
     project.save();
 };
+
+async function updateProject(req, idProject) {
+
+    const {
+        Description,
+        Title,
+        Category,
+        Goal } = req.body;
+
+    const vid = () => {
+        console.log('vidddd')
+        if (req.files) {
+            if (req.files[1]) {
+                return req.files[1].filename
+            }
+            else if (req.files[0].mimetype === "video/mp4") {
+                return req.files[0].filename
+
+            }
+            else {
+                return "video.mp4"
+            }
+        }
+    }
+    //*************************** */
+    // await User.findByIdAndUpdate({ _id: id.toString() }, {
+    //     FistName,
+    //     LastName,
+    //     Email,
+    //     Phone,
+    //     ImageProfile: req.files[0].filename,
+    //     Cv: req.files[1].filename,
+    //     StartupName
+    //   })
+    //     .then(data => data) /* mongoose find methode always return promise  */
+    //     .catch(err => console.log(err));
+    if (req.files) {
+        console.log("files")
+        await Project.findByIdAndUpdate({ _id: idProject.toString() }, {
+            Description,
+            Title,
+            Category,
+            Goal,
+            Picture: req.files && req.files[0].mimetype !== "video/mp4" ? req.files[0].filename : 'project.png',
+            Video: vid(),
+        }).then(data => data)
+            .catch(err => console.log(err))
+    }else{
+        await Project.findByIdAndUpdate({ _id: idProject.toString() }, {
+            Description,
+            Title,
+            Category,
+            Goal,
+        }).then(data => data)
+            .catch(err => console.log(err))
+    }
+
+    //************************* */
+
+
+    // currentProject = { ...currentProject,
+    //     Description,
+    //     Title,
+    //     Category,
+    //     Goal,
+    //     Picture: req.files && req.files[0].mimetype !== "video/mp4" ? req.files[0].filename : 'project.png',
+    //     Video: vid(),
+    // }
+
+    // currentProject.save();
+}
+
 const deleteProject = (idProject) => {
     Project.findOneAndDelete({ _id: idProject }, (err) => {
         if (err) throw err;
@@ -75,11 +148,12 @@ const getAllProjects = () => {
     return Project.find();
 }
 
-const updateProject = (data, idProject) => {
-    Project.findByIdAndUpdate({ _id: idProject.toString() }, data);
-}
+// const updateProject = (data, idProject) => {
+//     Project.findByIdAndUpdate({ _id: idProject.toString() }, data);
+// }
 
-module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject , getProjectByUser};
+
+module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser };
 
 /*
 
