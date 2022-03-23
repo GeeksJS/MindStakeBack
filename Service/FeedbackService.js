@@ -44,9 +44,16 @@ async function getAllComments(idProject) {
 async function getReplysByCommentId( idComment ) {
     const comm = await Comment.findOne({ _id: idComment })
     return await Comment.find({ _id: comm.Comment })
-    .then(console.log("l9itou"))
+    .then()
     .catch(err => console.log(err))
 }
 
+async function deleteCommentById(id) {
+    await Comment.findOneAndRemove({ _id: id.toString() }, (err) => {
+      if (err) throw err;
+    })
+    
+  }
 
-module.exports = { addComment, addReply, getAllComments, getReplysByCommentId };
+
+module.exports = { addComment, addReply, getAllComments, getReplysByCommentId, deleteCommentById };
