@@ -48,11 +48,17 @@ async function getReplysByCommentId( idComment ) {
     .catch(err => console.log(err))
 }
 
-async function deleteCommentById(id) {
-    await Comment.findOneAndRemove({ _id: id.toString() }, (err) => {
-      if (err) throw err;
-    })
+// async function deleteCommentById(id) {
+//     await Comment.findOneAndRemove({ _id: id.toString() }, (err) => {
+//       if (err) throw err;
+//     })
     
+//   }
+
+async function deleteCommentById(id) {
+    const comm = await Comment.findOne({ _id: id })
+    Comment.deleteMany({ _id: { $in: comm.Comment } }).then()
+    Comment.deleteOne({ _id:id }).then()
   }
 
 
