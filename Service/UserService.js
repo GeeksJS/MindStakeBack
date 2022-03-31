@@ -169,7 +169,7 @@ async function login(req, res) {
 
   res.json({
 
-    userId: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FirstName: existingUser.FirstName, LastName: existingUser.LastName, Role: existingUser.Role,
+    userId: existingUser._id, user_id: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FirstName: existingUser.FirstName, LastName: existingUser.LastName, Role: existingUser.Role,
     StartupName: existingUser.StartupName, ImageProfile: existingUser.ImageProfile, Cv: existingUser.Cv, Typecreator: existingUser.Typecreator,
     Phone: existingUser.Phone, CompanyName: existingUser.CompanyName, Address: existingUser.Address, isActivated: existingUser.isActivated, token: token
 
@@ -201,8 +201,7 @@ async function displayUserById(id) {
     .catch(err => console.log(err));
 }
 
-/*Function Update Creator */
-async function updateUser(req, id, res) {
+/*Function Update Creator */async function updateUser(req, id, res) {
   const { UserName,
     FirstName,
     LastName,
@@ -215,8 +214,8 @@ async function updateUser(req, id, res) {
   console.log(req.files)
 
 
-  if (req.files) {
-    if (req.files.length == 2) {
+  if (req.files.length !==0 ) {
+    if (req.files.length === 2) {
 
       await User.findByIdAndUpdate({ _id: id.toString() }, {
         FirstName,
@@ -268,8 +267,7 @@ async function updateUser(req, id, res) {
       .then(data => data) /* mongoose find methode always return promise  */
       .catch(err => console.log(err));
   }
-}
-/************Update SimpleUser */
+}/************Update SimpleUser */
 
 
 async function updateSimpleUser(req, id, res) {
@@ -281,14 +279,14 @@ async function updateSimpleUser(req, id, res) {
     ImageProfile,
   } = req.body;
   console.log(req.files)
-  if (req.files) {
+  if (req.files.length !== 0) {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
       FirstName,
       LastName,
       Email,
       Phone,
       ImageProfile: req.files[0].filename
-      
+
     })
       .then(data => data) /* mongoose find methode always return promise  */
       .catch(err => console.log(err));
@@ -314,7 +312,7 @@ async function updateInvestor(req, id, res) {
     ImageProfile,
   } = req.body;
   console.log(req.files)
-  if (req.files) {
+  if (req.files.length !==0) {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
       FirstName,
       LastName,
@@ -343,52 +341,52 @@ async function updateInvestor(req, id, res) {
 
 /********* Update Password*/
 
-  async function change_password(req, id, res){
-    
-	try{
-		const v = new Validator(req.body, {
-			old_Password: 'required',
-			new_Password: 'required',
-	  	confirm_Password: 'required|same:new_Password'
-		});
+async function change_password(req, id, res) {
 
-		const matched = await v.check();
+  try {
+    const v = new Validator(req.body, {
+      old_Password: 'required',
+      new_Password: 'required',
+      confirm_Password: 'required|same:new_Password'
+    });
 
-		if (!matched) {
-			return res.status(422).send(v.errors);
-		}
+    const matched = await v.check();
 
-		let current_user= await User.findOne({ _id: id })
+    if (!matched) {
+      return res.status(422).send(v.errors);
+    }
+
+    let current_user = await User.findOne({ _id: id })
     console.log(current_user.UserName)
-		if(bcrypt.compareSync(req.body.old_Password,current_user.Password)){
-    
-			let hashPassword=bcrypt.hashSync(req.body.new_Password,10);
-			await User.updateOne({
-				_id:current_user._id
-			},{
-				Password:hashPassword
-			});
+    if (bcrypt.compareSync(req.body.old_Password, current_user.Password)) {
 
-			return res.status(200).send({
-				message:'Password successfully updated',
-				data:current_user,
-			});
+      let hashPassword = bcrypt.hashSync(req.body.new_Password, 10);
+      await User.updateOne({
+        _id: current_user._id
+      }, {
+        Password: hashPassword
+      });
 
-		}else{
-			return res.status(400).send({
-				message:'Old Password does not matched',
-				data:{}
-			});
-		}
+      return res.status(200).send({
+        message: 'Password successfully updated',
+        data: current_user,
+      });
+
+    } else {
+      return res.status(400).send({
+        message: 'Old Password does not matched',
+        data: {}
+      });
+    }
 
 
 
-	}catch(err){
-		return res.status(400).send({
-			message:err.message,
-			data:err
-		});
-	}
+  } catch (err) {
+    return res.status(400).send({
+      message: err.message,
+      data: err
+    });
+  }
 
 }
 
@@ -413,16 +411,15 @@ async function displayAllUser() {
 /**************Achref**************/
 /* Function to Display All admins*/
 async function displayAllAdmin() {
-  return await User.find({Role: 'ADMIN'})
-  .then(data => data) /* mongoose find methode always return promise  */
-  .catch(err => console.log(err));
+  return await User.find({ Role: 'ADMIN' })
+    .then(data => data) /* mongoose find methode always return promise  */
+    .catch(err => console.log(err));
 }
 
 /* Function to Display All users except ADMIN*/
 async function displayAllUsersExceptAdmin() {
-  return await User.find({Role: ["SimpleUser", "Creator", "Investor"]})
-  .then(data => data) /* mongoose find methode always return promise  */
-  .catch(err => console.log(err));
+  return await User.find({ Role: ["SimpleUser", "Creator", "Investor"] })
+    .then(data => data) /* mongoose find methode always return promise  */
+    .catch(err => console.log(err));
 }
-module.exports = { addUser, displayUserById, updateUser, deleteUserById, displayAllUser,displayAllAdmin,displayAllUsersExceptAdmin, signup, login ,updateSimpleUser, updateInvestor, change_password} 
-
+module.exports = { addUser, displayUserById, updateUser, deleteUserById, displayAllUser, displayAllAdmin, displayAllUsersExceptAdmin, signup, login, updateSimpleUser, updateInvestor, change_password } 
