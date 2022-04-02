@@ -9,7 +9,6 @@ var ProjectService = require('../Service/ProjectService');
 
 router.post('/addproject/:iduser', fileUpload.any(), function (req, res, next) {
        ProjectService.addProject(req,req.params.iduser);
-
         res.end();
 });
 
