@@ -10,6 +10,7 @@ const fileUpload = require('../middleware/image-upload');
 router.post('/signup', fileUpload.any(), function (req, res) {
   console.log("file" + req.files[0].filename)
   //res.end()
+
   UserService.signup(req, res).then(data => res.json(data)).catch(err => console.log(err))
 }
 );
@@ -29,6 +30,25 @@ router.post('/login', function (req, res) {
 /* AddSimpleUser */
 router.post('/addUser', function (req, res, next) {
   UserService.addUser(req.body);
+});
+
+
+
+/*Update Admin By Id */
+router.put('/updateAdmin/:id', fileUpload.any(), function (req, res, next) {
+  var id = req.params.id;
+  UserService.updateAdmin(req, id, res).then(data => {
+    
+    console.log(data)
+  }).catch(err => console.log(err));
+
+});
+
+/*Update Admin By Id */
+router.put('/updateAdminImgP/:id', fileUpload.any(), function (req, res, next) {
+  var id = req.params.id;
+  UserService.updateAdminImgP(req, id, res)
+
 });
 
 
@@ -63,6 +83,13 @@ router.put('/changePassword/:id', function (req, res, next) {
   var id = req.params.id;
   UserService.change_password(req, id, res).then(data => console.log("data ")).catch(err => console.log(err));
 });
+/*****Change Email */
+router.put('/changeEmail/:id', function (req, res, next) {
+  var id = req.params.id;
+  UserService.change_email(req, id, res).then(data => console.log("data ")).catch(err => console.log(err));
+});
+
+
 /******** */
 /*Delete User By Id*/
 router.delete('/delete/:id', function (req, res, next) {

@@ -177,7 +177,9 @@ async function login(req, res) {
 
   res.json({
 
-    userId: existingUser._id, user_id: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FirstName: existingUser.FirstName, LastName: existingUser.LastName, Role: existingUser.Role,
+
+    userId: existingUser._id, Email: existingUser.Email, UserName: existingUser.UserName, FirstName: existingUser.FirstName, LastName: existingUser.LastName, Role: existingUser.Role,
+
     StartupName: existingUser.StartupName, ImageProfile: existingUser.ImageProfile, Cv: existingUser.Cv, Typecreator: existingUser.Typecreator,
     Phone: existingUser.Phone, CompanyName: existingUser.CompanyName, Address: existingUser.Address, isActivated: existingUser.isActivated, token: token
 
@@ -208,6 +210,68 @@ async function displayUserById(id) {
     .then(data => data) /* mongoose find methode always return promise  */
     .catch(err => console.log(err));
 }
+
+/*Function Update Admin */
+async function updateAdmin(req, id, res) {
+  const {
+    UserName,
+    FirstName,
+    LastName,
+    Email,
+    Phone
+  } = req.body;
+
+  if (req.files[0]) {
+    console.log('files')
+    return await User.findByIdAndUpdate({ _id: id.toString() }, {
+      UserName,
+      FirstName,
+      LastName,
+      Email,
+      Phone,
+      ImageProfile: req.files[0].filename
+    })
+      .then(data => res.json({
+        userId: id, Email: data.Email, UserName: data.UserName, FirstName: data.FirstName, LastName: data.LastName, Role: data.Role,
+        ImageProfile: data.ImageProfile, Phone: data.Phone
+      })) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  }
+
+  else {
+    return await User.findByIdAndUpdate({ _id: id.toString() }, {
+      UserName,
+      FirstName,
+      LastName,
+      Email,
+      Phone
+    })
+      .then(data => res.json({
+        userId: id, Email: data.Email, UserName: data.UserName, FirstName: data.FirstName, LastName: data.LastName, Role: data.Role,
+        ImageProfile: data.ImageProfile, Phone: data.Phone
+      })) /* mongoose find methode always return promise  */
+      .catch(err => console.log(err));
+  }
+
+}
+
+/*Function Update Admin image Profile */
+async function updateAdminImgP(req, id, res) {
+  const {
+    ImageProfile,
+  } = req.body;
+
+  if (req.files) {
+    if (req.files.length == 1) {
+      return User.findByIdAndUpdate({ _id: id.toString() }, {
+        ImageProfile: req.files[0].filename
+      })
+        .then(data => data) /* mongoose find methode always return promise  */
+        .catch(err => console.log(err));
+    }
+  }
+}
+
 
 /*Function Update Creator */
 async function updateUser(req, id, res) {
@@ -398,6 +462,60 @@ async function change_password(req, id, res) {
     });
   }
 
+
+}
+
+
+/********* Update Email*/
+
+async function change_email(req, id, res) {
+  console.log(req.body)
+  try {
+    const v = new Validator(req.body, {
+      old_Email: 'required',
+      new_Email: 'required',
+      confirm_Email: 'required|same:new_Email'
+    });
+
+    const matched = await v.check();
+
+    if (!matched) {
+      return res.status(422).send(v.errors);
+    }
+
+    let current_user = await User.findOne({ _id: id })
+    console.log(current_user.UserName)
+    if (req.body.old_Email === current_user.Email) {
+      
+      console.log("email",req.body.new_Email)
+      //let hashPassword = bcrypt.hashSync(req.body.new_Password, 10);
+      await User.updateOne({
+        _id: current_user._id
+      }, {
+        Email: req.body.new_Email
+      });
+      
+      return res.status(200).send({
+        message: 'Email successfully updated',
+        data: current_user,
+      });
+
+    } else {
+      return res.status(400).send({
+        message: 'Old Email does not matched',
+        data: {}
+      });
+    }
+
+
+
+  } catch (err) {
+    return res.status(400).send({
+      message: err.message,
+      data: err
+    });
+  }
+
 }
 
 /****** */
@@ -431,8 +549,8 @@ async function displayAllUsersExceptAdmin() {
   return await User.find({ Role: ["SimpleUser", "Creator", "Investor"] })
     .then(data => data) /* mongoose find methode always return promise  */
     .catch(err => console.log(err));
-}
 
+}
 //************************login with google *************************
 
 function LoginWithGoogle(req, res, next) {
@@ -571,10 +689,12 @@ function LoginWithFacebook(req, response, next) {
 
 
 
+module.exports = {LoginWithFacebook, LoginWithGoogle, addUser, displayUserById, updateAdmin, updateAdminImgP, updateUser, deleteUserById, displayAllUser, displayAllAdmin, displayAllUsersExceptAdmin, signup, login, updateSimpleUser, updateInvestor, change_password ,change_email}
+
+}
 
 
 
 
 
-module.exports = { LoginWithFacebook, LoginWithGoogle, addUser, displayUserById, updateUser, deleteUserById, displayAllUser, displayAllAdmin, displayAllUsersExceptAdmin, signup, login, updateSimpleUser, updateInvestor, change_password }
 
