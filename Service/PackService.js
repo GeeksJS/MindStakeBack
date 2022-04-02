@@ -1,15 +1,22 @@
+const Feature = require('../models/Feature');
 const Pack = require('../models/Pack')
 /* functio to add Pack*/
 function addPack(req) {
     console.log(req);
     var newpack = new Pack({
-        Description:req.Description,
-        Level:req.Level,
-        Price:req.Price,
+        Description: req.Description,
+        Level: req.Level,
+        Price: req.Price,
         Title: req.Title,
-        Duration:req.Duration,
-        Available:req.Available
+        Duration: req.Duration,
+        Available: req.Available,
+        Features: req.Features
     });
+
+    // if (req.Features) {
+    //     newpack.Features = Array.isArray(req.Features) ? req.Features : [req.Features]; 
+    // }
+
     newpack.save();
 
 }
@@ -21,18 +28,9 @@ async function displayPackById(id) {
 }
 
 /*Function Update */
-function updatePack(req, id) {
-    Pack.findByIdAndUpdate({ _id: id.toString() }, {
-        Description:req.Description,
-        Level:req.Level,
-        Price:req.Price,
-        Title: req.Title,
-        Duration:req.Duration,
-        Available:req.Available
-    },
-        (err) => {
-            if (err) throw err;
-        });
+async function updatePack(data, id) {
+    await Pack.findByIdAndUpdate({ _id: id.toString() }, data)
+        .then(data => data)
 
 }
 /* Function to Delete one Pack*/
@@ -48,4 +46,22 @@ async function displayAllPack() {
         .then(data => data) /* mongoose find methode always return promise  */
         .catch(err => console.log(err));
 }
-module.exports = { addPack, displayPackById, updatePack, deletePackById, displayAllPack } 
+
+
+
+
+async function features(req, res) {
+
+
+    return await Feature.find({'_id': { $in: req.body.Features } }, { _id: 0, Description: 1 }).distinct("Description")
+    .then(data =>  data)
+
+
+}
+
+function deleteFeatureById(desc) {
+    Feature.findOneAndRemove({ Description: desc }, (err) => {
+        if (err) throw err;
+    })
+}
+module.exports = { addPack, displayPackById, updatePack, deletePackById, displayAllPack, features,deleteFeatureById } 

@@ -9,7 +9,11 @@ var usersRouter = require('./routes/users');
 var projectRouter = require('./routes/projectRoute');
 var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
+
 var bookmarkRouter = require('./routes/bookmarkRoute');
+
+var featureRouter = require('./routes/featureRoute');
+
 var feedbackRouter = require('./routes/feedbackRoute');
 
 //Database acccess
@@ -62,7 +66,12 @@ app.use('/projects', projectRouter);
 app.use('/comments', feedbackRouter);
 app.use('/complaints', complaintRouter);
 app.use('/packs',packRouter);
+
 app.use('/bookmarks',bookmarkRouter);
+
+app.use('/features',featureRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

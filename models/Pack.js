@@ -15,17 +15,18 @@ var pack = new mongoose.Schema(
             required: true
         },
         Title:{
-            type: String,
+            type: String,  
             required: true
         },
         Duration:{
-            type: Number,
-            required: true
+            type: String,
+            enum: ['Month', 'Year']
         },
         Available:{
             type: Boolean,
             default: true
         },
+        Features:[{ type: mongoose.Schema.Types.String, ref: 'features' }],
         Payment: [ { type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
     }
 )
