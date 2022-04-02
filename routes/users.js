@@ -5,12 +5,9 @@ const { check } = require('express-validator')
 const imageUpload = require('../middleware/image-upload');
 const pdfUpload = require('../middleware/pdf-upload');
 const fileUpload = require('../middleware/image-upload');
-
-
 /*begin Simple Crud User*/
 
 router.post('/signup', fileUpload.any(), function (req, res) {
-  console.log(req.body)
   console.log("file" + req.files[0].filename)
   //res.end()
 
@@ -119,6 +116,14 @@ router.get('/', function (req, res, next) {
 router.get('/:id', function (req, res, next) {
   UserService.displayUserById(req.params.id).then(data => res.json(data));
 });
+
+router.post('/googlelogin', function (req, res, next) {
+  UserService.LoginWithGoogle(req, res, next);
+});
+router.post('/facebooklogin', function (req, res, next) {
+  UserService.LoginWithFacebook(req, res, next);
+});
+
 
 
 module.exports = router;
