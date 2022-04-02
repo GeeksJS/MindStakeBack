@@ -56,9 +56,9 @@ router.put('/updateAdminImgP/:id', fileUpload.any(), function (req, res, next) {
 /*Update Creator By Id */
 router.put('/update/:id', fileUpload.any(), function (req, res, next) {
   var id = req.params.id;
-  console.log(req.body)
-  console.log("file aya" + req.files[0])
-  UserService.updateUser(req, id, res).then(data => res.json(data)).catch(err => console.log(err));
+  console.log(req.body)  
+  UserService.updateUser(req, id,res).then(data => res.json(data)).catch(err=>console.log(err));
+
 
 });
 
@@ -66,16 +66,19 @@ router.put('/update/:id', fileUpload.any(), function (req, res, next) {
 router.put('/updateInvestor/:id', fileUpload.any(), function (req, res, next) {
   var id = req.params.id;
   console.log(req.body)
-  console.log("file aya" + req.files[0])
-  UserService.updateInvestor(req, id, res).then(data => res.json(data)).catch(err => console.log(err));
+
+  
+  UserService.updateInvestor(req, id,res).then(data => res.json(data)).catch(err=>console.log(err));
+
 });
 
 /*Update SimpleUser By Id */
 router.put('/updateSimpleUser/:id', fileUpload.any(), function (req, res, next) {
   var id = req.params.id;
   console.log(req.body)
-  console.log("file aya" + req.files[0])
-  UserService.updateSimpleUser(req, id, res).then(data => res.json(data)).catch(err => console.log(err));
+
+  UserService.updateSimpleUser(req, id,res).then(data => res.json(data)).catch(err=>console.log(err));
+
 });
 
 /*****Change Password */

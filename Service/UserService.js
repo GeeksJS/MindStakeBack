@@ -275,6 +275,7 @@ async function updateAdminImgP(req, id, res) {
 
 /*Function Update Creator */
 async function updateUser(req, id, res) {
+
   const { UserName,
     FirstName,
     LastName,
@@ -287,8 +288,8 @@ async function updateUser(req, id, res) {
   console.log(req.files)
 
 
-  if (req.files) {
-    if (req.files.length == 2) {
+  if (req.files.length !==0 ) {
+    if (req.files.length === 2) {
 
       await User.findByIdAndUpdate({ _id: id.toString() }, {
         FirstName,
@@ -340,8 +341,7 @@ async function updateUser(req, id, res) {
       .then(data => data) /* mongoose find methode always return promise  */
       .catch(err => console.log(err));
   }
-}
-/************Update SimpleUser */
+}/************Update SimpleUser */
 
 
 async function updateSimpleUser(req, id, res) {
@@ -353,7 +353,7 @@ async function updateSimpleUser(req, id, res) {
     ImageProfile,
   } = req.body;
   console.log(req.files)
-  if (req.files) {
+  if (req.files.length !== 0) {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
       FirstName,
       LastName,
@@ -386,7 +386,7 @@ async function updateInvestor(req, id, res) {
     ImageProfile,
   } = req.body;
   console.log(req.files)
-  if (req.files) {
+  if (req.files.length !==0) {
     await User.findByIdAndUpdate({ _id: id.toString() }, {
       FirstName,
       LastName,
@@ -497,6 +497,7 @@ async function change_email(req, id, res) {
       
       return res.status(200).send({
         message: 'Email successfully updated',
+
         data: current_user,
       });
 
@@ -689,12 +690,6 @@ function LoginWithFacebook(req, response, next) {
 
 
 
-module.exports = {LoginWithFacebook, LoginWithGoogle, addUser, displayUserById, updateAdmin, updateAdminImgP, updateUser, deleteUserById, displayAllUser, displayAllAdmin, displayAllUsersExceptAdmin, signup, login, updateSimpleUser, updateInvestor, change_password ,change_email}
-
-}
-
-
-
-
+module.exports = {LoginWithFacebook, LoginWithGoogle, addUser, displayUserById, updateUser, deleteUserById, displayAllUser, displayAllAdmin, displayAllUsersExceptAdmin, signup, login, updateSimpleUser, updateInvestor, change_password } 
 
 
