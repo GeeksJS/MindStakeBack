@@ -3,17 +3,19 @@ const Project = require('../models/Project');
 
 async function addBookmark(idProject, idUser) {
 
-    let bm = await Bookmark.find({ User: idUser.toString(), Project:idProject.toString() })
-    if(bm){
-        return console.log("already exists")
-    }
-    else {
-        var bookmark = new Bookmark({
-            Project: idProject,
-            User: idUser
-        });
-        bookmark.save()
-    }    
+    await Bookmark.find({ User: idUser.toString(), Project: idProject.toString() }).then(res => {
+        if (res[0]) {
+            return console.log("already exists")
+        }
+        else {
+            var bookmark = new Bookmark({
+                Project: idProject,
+                User: idUser
+            });
+            bookmark.save()
+        }
+    })
+
 };
 
 const getBookmarks = async (idUser) => {
@@ -29,7 +31,7 @@ const getBookmarks = async (idUser) => {
 }
 
 const deleteBookmark = (idProject, idUser) => {
-    Bookmark.findOneAndDelete({ Project: idProject, User:idUser }, (err) => {
+    Bookmark.findOneAndDelete({ Project: idProject, User: idUser }, (err) => {
         if (err) throw err;
     })
 };
