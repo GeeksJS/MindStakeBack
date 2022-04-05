@@ -97,6 +97,9 @@ router.post('/facebooklogin', function (req, res, next) {
   UserService.LoginWithFacebook(req, res, next);
 });
 
-
+//get all users investors
+router.get('/investors',  function (req, res, next) {
+   UserService.displayAllInvestors().then(data => res.json(data));
+});
 
 module.exports = router;
