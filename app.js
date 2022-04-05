@@ -9,6 +9,11 @@ var usersRouter = require('./routes/users');
 var projectRouter = require('./routes/projectRoute');
 var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
+
+var bookmarkRouter = require('./routes/bookmarkRoute');
+
+var featureRouter = require('./routes/featureRoute');
+
 var feedbackRouter = require('./routes/feedbackRoute');
 var conversationRoute = require('./routes/conversationRoute');
 var messageRoute = require('./routes/messageRoute');
@@ -64,6 +69,10 @@ app.use('/complaints', complaintRouter);
 app.use('/packs', packRouter);
 app.use('/conversations', conversationRoute);
 app.use('/messages', messageRoute);
+app.use('/bookmarks',bookmarkRouter);
+app.use('/features',featureRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

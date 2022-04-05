@@ -24,4 +24,10 @@ router.get('/getReplysByCommentId/:idComment', function (req, res, next) {
     .then(data => res.json(data));
 });
 
+router.delete('/delete/:id', function (req, res, next) {
+    var id = req.params.id;
+    FeedbackService.deleteCommentById(id);
+    res.end()
+  });
+
 module.exports = router ;

@@ -9,7 +9,6 @@ var ProjectService = require('../Service/ProjectService');
 
 router.post('/addproject/:iduser', fileUpload.any(), function (req, res, next) {
        ProjectService.addProject(req,req.params.iduser);
-
         res.end();
 });
 
@@ -52,7 +51,7 @@ router.put('/updateproject/:id',fileUpload.any(), function (req, res, next) {
 
 
 
-/************Achref *************/
+/************Achref *************/ 
  
 //Approve project
 router.put('/approveproject/:id', function (req, res, next) {

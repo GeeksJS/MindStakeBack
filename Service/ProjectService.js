@@ -126,7 +126,6 @@ const deleteProject = (idProject) => {
     Project.findOneAndDelete({ _id: idProject }, (err) => {
         if (err) throw err;
     })
-
 };
 
 
