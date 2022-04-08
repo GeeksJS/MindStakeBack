@@ -692,4 +692,3 @@ function LoginWithFacebook(req, response, next) {
 
 module.exports = {LoginWithFacebook, LoginWithGoogle, addUser, displayUserById, updateUser, deleteUserById, displayAllUser, displayAllAdmin, displayAllUsersExceptAdmin, signup, login, updateSimpleUser, updateInvestor, change_password } 
 
-
