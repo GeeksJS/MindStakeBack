@@ -19,10 +19,14 @@ var feedbackRouter = require('./routes/feedbackRoute');
 var blockchainRouter = require('./routes/blockchainRoute');
 
 
+
+var conversationRoute = require('./routes/conversationRoute');
+var messageRoute = require('./routes/messageRoute');
+
 //Database acccess
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/mindstake", {useNewUrlParser: true, useUnifiedTopology: true}, 
-()=>console.log("success connection with DB"));
+mongoose.connect("mongodb://localhost:27017/mindstake", { useNewUrlParser: true, useUnifiedTopology: true },
+    () => console.log("success connection with DB"));
 
 mongoose.set('useFindAndModify', false);
 
@@ -44,14 +48,14 @@ app.use('/uploads/video', express.static(path.join('uploads', 'video')));
 
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
-  next();
+    next();
 });
 
 
@@ -68,10 +72,10 @@ app.use('/users', usersRouter);
 app.use('/projects', projectRouter);
 app.use('/comments', feedbackRouter);
 app.use('/complaints', complaintRouter);
-app.use('/packs',packRouter);
-
+app.use('/packs', packRouter);
+app.use('/conversations', conversationRoute);
+app.use('/messages', messageRoute);
 app.use('/bookmarks',bookmarkRouter);
-
 app.use('/features',featureRouter);
 
 app.use('/blockchain',blockchainRouter);
@@ -80,20 +84,20 @@ app.use('/blockchain',blockchainRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
-app.set('port',process.env.PORT)
+app.set('port', process.env.PORT)
 
 module.exports = app;
