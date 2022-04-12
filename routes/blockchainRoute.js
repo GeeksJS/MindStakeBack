@@ -7,7 +7,6 @@ const PubSub = require("../blockchain/pubsub")
 const blockchain = new Blockchain();
 const pubsub = new PubSub({blockchain})
 
-setTimeout(() => pubsub.broadcastChain(), 1000)
 
 router.get('/blocks',(req,res) => {
     res.json(blockchain.chain)
@@ -16,6 +15,7 @@ router.get('/blocks',(req,res) => {
 router.post('/mine',(req,res) => {
     const {data} = req.body;
     blockchain.addBlock({data});
+    pubsub.broadcastChain()
     res.redirect('/blockchain/blocks')
 })
 
