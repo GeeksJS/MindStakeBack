@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const request = require('request');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -11,6 +12,7 @@ var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
 
 var bookmarkRouter = require('./routes/bookmarkRoute');
+const Blockchain = require("./blockchain/blockchain")
 
 var featureRouter = require('./routes/featureRoute');
 
@@ -97,7 +99,27 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+const blockchain = new Blockchain();
+const syncChains = () => {
+    request({ url: 'http://localhost:3000/blockchain/blocks' }, (error, response, body) => {
+         if (!error && response.statusCode === 200) {
+            const rootChain = JSON.parse(body); 
+            console.log('replace chain on a sync with', rootChain);
+            blockchain.replaceChain(rootChain);
+           }
+    });
+} 
 
-app.set('port', process.env.PORT)
+let PEER_PORT;
+if (process.env.GENERATE_PEER_PORT === 'true') {
+    PEER_PORT = process.env.PORT + Math.ceil( Math.random() * 1000 )
+}
+const PORT = PEER_PORT || process.env.PORT
+app.listen( PORT , () => {
+
+    if( PORT !== PEER_PORT ){
+        syncChains()
+    }
+} )
 
 module.exports = app;
