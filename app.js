@@ -15,8 +15,14 @@ var bookmarkRouter = require('./routes/bookmarkRoute');
 var featureRouter = require('./routes/featureRoute');
 
 var feedbackRouter = require('./routes/feedbackRoute');
+
+var blockchainRouter = require('./routes/blockchainRoute');
+
+
+
 var conversationRoute = require('./routes/conversationRoute');
 var messageRoute = require('./routes/messageRoute');
+
 //Database acccess
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/mindstake", { useNewUrlParser: true, useUnifiedTopology: true },
@@ -71,6 +77,9 @@ app.use('/conversations', conversationRoute);
 app.use('/messages', messageRoute);
 app.use('/bookmarks',bookmarkRouter);
 app.use('/features',featureRouter);
+
+app.use('/blockchain',blockchainRouter);
+
 
 
 // catch 404 and forward to error handler
