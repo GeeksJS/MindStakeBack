@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run start-redis && node ./bin/www",
+    "start": "node ./bin/www",
     "dev": "npm run start-redis && nodemon app.js",
     "start-redis": "redis-server --daemonize yes"
   },
