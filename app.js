@@ -12,6 +12,9 @@ var complaintRouter = require('./routes/complaintRoute');
 var packRouter = require('./routes/packRoute');
 
 var bookmarkRouter = require('./routes/bookmarkRoute');
+
+const passwordReset = require("./routes/passwordReset");
+
 const Blockchain = require("./blockchain/blockchain")
 
 var featureRouter = require('./routes/featureRoute');
@@ -19,6 +22,10 @@ var featureRouter = require('./routes/featureRoute');
 var feedbackRouter = require('./routes/feedbackRoute');
 
 var blockchainRouter = require('./routes/blockchainRoute');
+
+const TransactionPool = require('./wallet/transaction-pool')
+const transactionPool = new TransactionPool();
+
 
 
 
@@ -79,6 +86,8 @@ app.use('/conversations', conversationRoute);
 app.use('/messages', messageRoute);
 app.use('/bookmarks',bookmarkRouter);
 app.use('/features',featureRouter);
+app.use("/password-reset", passwordReset);
+
 
 app.use('/blockchain',blockchainRouter);
 
@@ -100,7 +109,7 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 const blockchain = new Blockchain();
-const syncChains = () => {
+const syncWithRootState = () => {
     request({ url: 'http://localhost:3000/blockchain/blocks' }, (error, response, body) => {
          if (!error && response.statusCode === 200) {
             const rootChain = JSON.parse(body); 
@@ -108,17 +117,29 @@ const syncChains = () => {
             blockchain.replaceChain(rootChain);
            }
     });
+
+    request({ url: `http://localhost:3000/blockchain/transaction-pool-map` }, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+          const rootTransactionPoolMap = JSON.parse(body);
+    
+          console.log('replace transaction pool map on a sync with', rootTransactionPoolMap);
+          transactionPool.setMap(rootTransactionPoolMap);
+        }
+      });
 } 
 
 let PEER_PORT;
 if (process.env.GENERATE_PEER_PORT === 'true') {
-    PEER_PORT = process.env.PORT + Math.ceil( Math.random() * 1000 )
+    //PEER_PORT = process.env.PORT + Math.ceil( Math.random() * 1000 )
+    PEER_PORT = 3100
+
+
 }
 const PORT = PEER_PORT || process.env.PORT
 app.listen( PORT , () => {
-
+    console.log(`listening at localhost:${PORT}`);
     if( PORT !== PEER_PORT ){
-        syncChains()
+        syncWithRootState()
     }
 } )
 
