@@ -41,6 +41,13 @@ router.get('/getallprojects', function (req, res, next) {
          ProjectService.getAllProjects().then(data=>res.json(data));
 });
 
+router.put('/updateprojectraised/:id', function (req, res, next) {
+      
+        ProjectService.updateProjectRaised(req,req.params.id);
+        
+        res.end()
+});
+
 router.put('/updateproject/:id',fileUpload.any(), function (req, res, next) {
         console.log(req.files)
         ProjectService.updateProject(req,req.params.id);

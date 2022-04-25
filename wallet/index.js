@@ -1,7 +1,7 @@
 const { ec } = require('../util/index')
 const cryptoHash = require('../blockchain/crypto-hash')
 const Transaction = require('./transaction');
-const {STARTING_BALANCE} = require('../blockchain/config')
+const { STARTING_BALANCE } = require('../blockchain/config')
 
 
 class Wallet {
@@ -13,23 +13,24 @@ class Wallet {
     this.publicKey = this.keyPair.getPublic().encode('hex');
   }
 
-  sign(data) {
-    return this.keyPair.sign(cryptoHash(data))
-  }
+  // sign(data) {
+  //   return this.keyPair.sign(cryptoHash(data))
+  // }
 
-  createTransaction({ recipient, amount, chain }) {
+  createTransaction({ senderWallet, recipient, amount, chain }) {
     if (chain) {
       this.balance = Wallet.calculateBalance({
         chain,
         address: this.publicKey
       });
     }
+    //console.log(this.keyPair)
 
     if (amount > this.balance) {
       throw new Error('Amount exceeds balance');
     }
 
-    return new Transaction({ senderWallet: this, recipient, amount });
+    return new Transaction({ senderWallet, recipient, amount });
   }
 
   static calculateBalance({ chain, address }) {

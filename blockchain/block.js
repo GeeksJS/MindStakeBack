@@ -11,7 +11,7 @@ class Block {
         this.nonce = nonce;
         this.difficulty = difficulty;
 
-    }
+    } 
 
     static genesis() {
         return new Block(GENESIS_DATA);
