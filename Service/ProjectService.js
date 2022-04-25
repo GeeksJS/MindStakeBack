@@ -15,7 +15,8 @@ function addProject(req, idUser) {
         Picture,
         Video,
         Approved,
-        SocialMedia } = req.body;
+        SocialMedia,
+        Location } = req.body;
 
     const vid = () => {
         if (req.files) {
@@ -44,20 +45,27 @@ function addProject(req, idUser) {
         Video: vid(),
         SocialMedia,
         Approved,
+        Location,
         User: idUser,
         Payment: []
     });
     //save project with mongoose
     project.save();
 };
-
+async function updateProjectRaised(req, idProject) {
+    const raised = req.body.Raised
+    const project = await Project.findOne({_id:idProject.toString()})
+    project.Raised = raised
+    project.save()
+}
 async function updateProject(req, idProject) {
 
     const {
         Description,
         Title,
         Category,
-        Goal } = req.body;
+        Goal,
+        Raised } = req.body;
 
     const vid = () => {
         console.log('vidddd')
@@ -97,7 +105,7 @@ async function updateProject(req, idProject) {
             Video: vid(),
         }).then(data => data)
             .catch(err => console.log(err))
-    }else{
+    } else {
         await Project.findByIdAndUpdate({ _id: idProject.toString() }, {
             Description,
             Title,
@@ -154,18 +162,18 @@ const getAllProjects = () => {
 
 
 
- 
- 
+
+
 
 /************Achref *************/
 
 //Approve project
-async function approveProject (data, idProject) {
+async function approveProject(data, idProject) {
     await Project.findByIdAndUpdate({ _id: idProject.toString() }, data)
-    .then(data=>data)
+        .then(data => data)
 }
 
-module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject , getProjectByUser,approveProject};
+module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject,updateProjectRaised };
 
 
 /*

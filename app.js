@@ -21,6 +21,9 @@ var featureRouter = require('./routes/featureRoute');
 
 var feedbackRouter = require('./routes/feedbackRoute');
 
+var transactionRouter = require('./routes/transactionRoute');
+
+
 var blockchainRouter = require('./routes/blockchainRoute');
 
 const TransactionPool = require('./wallet/transaction-pool')
@@ -34,9 +37,9 @@ var messageRoute = require('./routes/messageRoute');
 
 //Database acccess
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/mindstake", { useNewUrlParser: true, useUnifiedTopology: true },
+mongoose.connect("mongodb://localhost:27017/mindstake", {autoIndex: false, useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log("success connection with DB"));
-
+ 
 mongoose.set('useFindAndModify', false);
 
 
@@ -87,6 +90,7 @@ app.use('/messages', messageRoute);
 app.use('/bookmarks',bookmarkRouter);
 app.use('/features',featureRouter);
 app.use("/password-reset", passwordReset);
+app.use('/payment',transactionRouter);
 
 
 app.use('/blockchain',blockchainRouter);

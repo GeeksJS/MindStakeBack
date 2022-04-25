@@ -53,6 +53,10 @@ var project = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        Location: {
+            type: String,
+            required: false
+        },
 
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
         Payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
