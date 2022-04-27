@@ -34,4 +34,32 @@ router.post('/add-donation', async (req,res)=>{
     res.end()
 });
 
+
+router.get('/transactions/:idUser', async (req,res)=>{
+    const id = req.params.idUser
+
+    const trans = await Transaction.find({User:id.toString()})
+
+    res.json(trans)
+
+});
+  
+router.get('/donations-user/:idUser', async (req,res)=>{
+    const id = req.params.idUser
+
+    const don = await Donation.find({Sender:id.toString()})
+
+    res.json(don)
+
+});
+
+router.get('/donations-creator/:idUser', async (req,res)=>{
+    const id = req.params.idUser
+
+    const don = await Donation.find({Receiver:id.toString()})
+
+    res.json(don)
+
+});
+
 module.exports = router;
