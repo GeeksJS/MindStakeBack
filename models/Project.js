@@ -57,6 +57,11 @@ var project = new mongoose.Schema(
             type: String,
             required: false
         },
+        Level: {
+            type: Number,
+            default: 0
+
+        }, 
 
         User: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
         Payment: [{ type: mongoose.Schema.Types.ObjectId, ref: 'payments' }]
