@@ -1,3 +1,5 @@
+
+
 var createError = require('http-errors');
 var express = require('express');
 const request = require('request');
@@ -28,6 +30,7 @@ var blockchainRouter = require('./routes/blockchainRoute');
 var proposalRouter = require('./routes/ProposalRoute');
 const TransactionPool = require('./wallet/transaction-pool')
 const transactionPool = new TransactionPool();
+
 
 
 
@@ -131,6 +134,10 @@ const syncWithRootState = () => {
         }
       });
 } 
+
+
+
+
 
 let PEER_PORT;
 if (process.env.GENERATE_PEER_PORT === 'true') {
