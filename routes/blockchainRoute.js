@@ -108,32 +108,37 @@ router.post('/create-wallet/:userId', async (req, res) => {
 
 router.put('/update-wallet/:userId', async (req, res) => {
     const id = req.params.userId;
-
+    let newBalance; 
     const qte = req.body.coins
+    console.log(qte)
 
     const existingWallet = await Wallet1.findOne({ User: id.toString() })
 
-    const newBalance = existingWallet.balance+qte  
+    console.log(existingWallet.balance)
+
+    newBalance = existingWallet.balance+qte  
+
+    console.log(newBalance)
     existingWallet.balance =  newBalance  
 
     existingWallet.save()
 
-    res.end()
+    res.end()  
 
 });
 
 router.put('/update-wallet-minus/:userId', async (req, res) => {
     const id = req.params.userId;
-
+    let newBalance; 
     const qte = req.body.coins
 
     const existingWallet = await Wallet1.findOne({ User: id.toString() })
 
-    const newBalance = existingWallet.balance-qte  
+    newBalance = existingWallet.balance-qte  
     existingWallet.balance =  newBalance  
 
     existingWallet.save()
-
+ 
     res.end()
 
 });
