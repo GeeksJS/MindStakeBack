@@ -25,7 +25,7 @@ var transactionRouter = require('./routes/transactionRoute');
 
 
 var blockchainRouter = require('./routes/blockchainRoute');
-
+var proposalRouter = require('./routes/ProposalRoute');
 const TransactionPool = require('./wallet/transaction-pool')
 const transactionPool = new TransactionPool();
 
@@ -91,7 +91,7 @@ app.use('/bookmarks',bookmarkRouter);
 app.use('/features',featureRouter);
 app.use("/password-reset", passwordReset);
 app.use('/payment',transactionRouter);
-
+app.use('/proposal',proposalRouter);
 
 app.use('/blockchain',blockchainRouter);
 

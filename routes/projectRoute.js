@@ -5,7 +5,19 @@ const fileUpload = require('../middleware/image-upload');
 var router = express.Router();
 var Project = require('../models/Project');
 var ProjectService = require('../Service/ProjectService');
+var Projectpack = require('../models/ProjectPack');
+var ProjectPackService = require('../Service/ProjectPackService');
 
+// Buy Pack For Project 
+router.post('/BuyPackForProject', function (req, res, next) {
+        ProjectPackService.buyPackForProject(req);
+         res.end();
+ });
+
+ // get All Project By Pack 
+ router.get('/getallprojectsByPack', function (req, res, next) {
+        ProjectService.getAllProjectsByPack().then(data=>res.json(data));
+});
 
 router.post('/addproject/:iduser', fileUpload.any(), function (req, res, next) {
        ProjectService.addProject(req,req.params.iduser);
@@ -33,6 +45,7 @@ router.get('/getproject/:id',  function (req, res, next) {
         //to get value from promise u should type `.then` method and give it callBack function
          ProjectService.getProjectByID(req.params.id).then(data => res.json(data));
 });
+
 
 
 

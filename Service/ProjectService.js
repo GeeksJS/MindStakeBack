@@ -1,6 +1,6 @@
 const Project = require('../models/Project')
 const fileUpload = require('../middleware/image-upload');
-
+const ProjectPack = require('../models/ProjectPack')
 // addproject methode
 function addProject(req, idUser) {
     //initialise project with arguments
@@ -54,7 +54,7 @@ function addProject(req, idUser) {
 };
 async function updateProjectRaised(req, idProject) {
     const raised = req.body.Raised
-    const project = await Project.findOne({_id:idProject.toString()})
+    const project = await Project.findOne({ _id: idProject.toString() })
     project.Raised = raised
     project.save()
 }
@@ -173,7 +173,17 @@ async function approveProject(data, idProject) {
         .then(data => data)
 }
 
-module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject,updateProjectRaised };
+// Get All Project By Level Pack 
+const getAllProjectsByPack = () => {
+   const data =  Project.find().sort({"Level": -1});
+       
+return data 
+    
+
+}
+
+
+module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject, updateProjectRaised, getAllProjectsByPack };
 
 
 /*
