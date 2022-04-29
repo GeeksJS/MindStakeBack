@@ -24,12 +24,20 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(404).json({ notfound: 'No proposal found' }));
 }   
 );
+
 router.get('/owner/:id', (req, res) => { 
     Proposal.find({ownerId: req.params.id})
         .then(proposal => res.json(proposal))
         .catch(err => res.status(404).json({ notfound: 'No proposal found' }));
 }   
 );
+router.get('/getByInvestorandProject/:idProject/:idInvestor', (req, res) => { 
+    Proposal.findOne({projectId: req.params.idProject, investorId:req.params.idInvestor})
+        .then(proposal => res.json(proposal))
+        .catch(err => res.status(404).json({ notfound: 'No proposal found' }));
+}   
+);
+
 router.put('/accepte/:id',  (req, res) => {
     Proposal.findByIdAndUpdate(req.params.id, {state:"Approved"})
         .then(proposal => {res.json(proposal);
@@ -52,8 +60,8 @@ router.put('/reject/:id', (req, res) => {
         .catch(err => res.status(404).json({ notfound: 'No proposal found' })); 
 }   //update proposal
 );
-router.delete('/:id', (req, res) => {   //delete proposal
-    Proposal.findByIdAndDelete(req.params.id)
+router.delete('/:idProject/:idInvestor', (req, res) => {   //delete proposal
+  const poposal =  Proposal.findOneAndDelete({projectId: req.params.idProject, investorId:req.params.idInvestor})
         .then(() => res.json({ success: true }))
         .catch(err => res.status(404).json({ notfound: 'No proposal found' }));
 }
