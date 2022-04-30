@@ -152,7 +152,7 @@ const getProjectByUser = async (id) => {
 }
 
 const getAllProjects = () => {
-    return Project.find();
+    return Project.find({Approved:true});
 }
 
 // const updateProject = (data, idProject) => {
