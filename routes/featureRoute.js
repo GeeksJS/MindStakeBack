@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 const Feature = require('../models/Feature')
 var PackService = require('../Service/PackService');
+const checkAuth = require('../middleware/check-auth');
 
 
+router.use(checkAuth)
 
 /* AddSimplePack */
 router.post('/addFeature', function (req, res, next) {

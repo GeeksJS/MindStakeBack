@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const Proposal = require('../models/Proposal');
 const Conversation = require("../models/Conversation");
+const checkAuth = require('../middleware/check-auth');
+
+router.use(checkAuth)
 
 //crud proposal
 router.get('/', (req, res) => {

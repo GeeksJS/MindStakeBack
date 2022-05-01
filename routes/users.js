@@ -9,6 +9,7 @@ const fileUpload = require('../middleware/image-upload');
 const User = require('../models/User')
 const Token = require('../models/token')
 const sendEmail = require("../util/sendEmail");
+const checkAuth = require('../middleware/check-auth');
 
 
 
@@ -602,10 +603,16 @@ router.post('/login', function (req, res) {
 }
 );
 
+router.post('/googlelogin', function (req, res, next) {
+  UserService.LoginWithGoogle(req, res, next);
+});
+router.post('/facebooklogin', function (req, res, next) {
+  UserService.LoginWithFacebook(req, res, next);
+});
 
 
 
-
+router.use(checkAuth)
 
 /* AddSimpleUser */
 router.post('/addUser', function (req, res, next) {
@@ -700,12 +707,7 @@ router.get('/:id', function (req, res, next) {
   UserService.displayUserById(req.params.id).then(data => res.json(data));
 });
 
-router.post('/googlelogin', function (req, res, next) {
-  UserService.LoginWithGoogle(req, res, next);
-});
-router.post('/facebooklogin', function (req, res, next) {
-  UserService.LoginWithFacebook(req, res, next);
-});
+
 
 //get all users investors
 router.get('/investors', function (req, res, next) {

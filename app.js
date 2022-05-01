@@ -6,6 +6,7 @@ const request = require('request');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors')
 var databaseurl = process.env.DATA_BASE_URL;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -48,6 +49,17 @@ mongoose.set('useFindAndModify', false);
 
 
 var app = express();
+app.use(cors())
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
@@ -62,16 +74,6 @@ app.use('/uploads/cv', express.static(path.join('uploads', 'cv')));
 app.use('/uploads/video', express.static(path.join('uploads', 'video')));
 
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    );
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-
-    next();
-});
 
 
 
