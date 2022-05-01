@@ -152,7 +152,8 @@ const getProjectByUser = async (id) => {
 }
 
 const getAllProjects = () => {
-    return Project.find({Approved:true});
+    const data =  Project.find({Approved:true}).sort({"Level": -1});
+    return data
 }
 
 // const updateProject = (data, idProject) => {

@@ -4,17 +4,17 @@ const Pack = require('../models/Pack');
 const Project = require('../models/Project');
 
 
-async function buyPackForProject(req) {
+async function buyPackForProject(idPack, idProject) {
     
-    PackInfo = await Pack.findOne({ _id:  req.body.packId.toString() });
+    PackInfo = await Pack.findOne({ _id: idPack.toString() });
 
     var newBuy = new projectPack({
-        Project: req.body.projectId,
-        Pack: req.body.packId,
+        Project: idProject,
+        Pack: idPack,
     });
 
-   const ProjectInfo = await Project.findOne({ _id:  req.body.projectId.toString() });
-   ProjectInfo.Level =   PackInfo.Level;
+   const ProjectInfo = await Project.findOne({ _id:  idProject.toString() });
+   ProjectInfo.Level =  ProjectInfo.Level + PackInfo.Level;
    ProjectInfo.save();
     newBuy.save();
 
