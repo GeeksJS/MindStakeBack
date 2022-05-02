@@ -108,7 +108,7 @@ router.post('/create-wallet/:userId', async (req, res) => {
 
 router.put('/update-wallet/:userId', async (req, res) => {
     const id = req.params.userId;
-    let newBalance; 
+    let newBalance;
     const qte = req.body.coins
     console.log(qte)
 
@@ -116,29 +116,29 @@ router.put('/update-wallet/:userId', async (req, res) => {
 
     console.log(existingWallet.balance)
 
-    newBalance = existingWallet.balance+qte  
+    newBalance = existingWallet.balance + qte
 
     console.log(newBalance)
-    existingWallet.balance =  newBalance  
+    existingWallet.balance = newBalance
 
     existingWallet.save()
 
-    res.end()  
+    res.end()
 
 });
 
 router.put('/update-wallet-minus/:userId', async (req, res) => {
     const id = req.params.userId;
-    let newBalance; 
+    let newBalance;
     const qte = req.body.coins
 
     const existingWallet = await Wallet1.findOne({ User: id.toString() })
 
-    newBalance = existingWallet.balance-qte  
-    existingWallet.balance =  newBalance  
+    newBalance = existingWallet.balance - qte
+    existingWallet.balance = newBalance
 
     existingWallet.save()
- 
+
     res.end()
 
 });
@@ -159,6 +159,14 @@ router.get('/wallet/:userId', async (req, res) => {
 
 
 });
+
+router.get('/balance', async (req, res) => {
+    const balance = await stripe.balance.retrieve({
+        stripeAccount: 'acct_1KbolmBs4Ihz8GXR'
+    });
+    res.json(balance.pending[1].amount / 100)
+});
+
 
 router.get('/payment', async (req, res) => {
     const paymentIntents = await stripe.paymentIntents.list({

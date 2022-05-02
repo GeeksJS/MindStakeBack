@@ -176,15 +176,23 @@ async function approveProject(data, idProject) {
 
 // Get All Project By Level Pack 
 const getAllProjectsByPack = () => {
-   const data =  Project.find().sort({"Level": -1});
-       
-return data 
-    
+    const data = Project.find().sort({ "Level": -1 });
+    return data
+}
 
+// Get All Project By Level Pack 
+const getAllProjectsByCategory = () => {
+    const data = Project.aggregate([
+        {$group:{
+            _id: '$Category',
+            count:{$sum:1}
+        }}
+    ])
+    return data
 }
 
 
-module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject, updateProjectRaised, getAllProjectsByPack };
+module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject, updateProjectRaised, getAllProjectsByCategory, getAllProjectsByPack };
 
 
 /*

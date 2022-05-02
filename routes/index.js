@@ -12,15 +12,15 @@ const headers = {
   Authorization: "Bearer " + API_KEY,
 };
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-async function getRoom (room)  {
+async function getRoom(room) {
   return fetch(`https://api.daily.co/v1/rooms/${room}`, {
     method: "GET",
     headers
-   
+
   })
     .then((res) => res.json())
     .then((json) => {
@@ -29,11 +29,11 @@ async function getRoom (room)  {
     .catch((err) => console.error("error:" + err));
 };
 
-async function createRoom  (room) {
+async function createRoom(room) {
   return fetch("https://api.daily.co/v1/rooms", {
     method: "POST",
     headers,
-    
+
     body: JSON.stringify({
       name: room,
       properties: {
@@ -55,13 +55,13 @@ async function createRoom  (room) {
 router.get("/video-call/:id", async function (req, res) {
   const roomId = req.params.id;
 
-  const room = await getRoom(roomId);
-  if (room.error) {
-    const newRoom = await createRoom(roomId);
-    res.status(200).send(newRoom);
-  } else {
-    res.status(200).send(room);
-  }
+  // const room = await getRoom(roomId);
+  // if (room.error) {
+  const newRoom = await createRoom(roomId);
+  res.status(200).send(newRoom);
+  // } else {
+  //   res.status(200).send(room);
+// }
 });
 
 module.exports = router;

@@ -1,3 +1,6 @@
+
+
+
 var express = require('express');
 var router = express.Router();
 const Proposal = require('../models/Proposal');
@@ -21,6 +24,14 @@ router.post('/', (req, res) => {
         .catch(err => res.status(400).json({ error: err }));
 }
 );
+router.get('/getallproposalbystate', function (req, res, next) {
+    Proposal.aggregate([
+        {$group:{
+            _id: '$state',
+            count:{$sum:1}
+        }}
+    ]).then(data=>res.json(data))
+});
 router.get('/:id', (req, res) => {
     Proposal.findById(req.params.id)
         .then(proposal => res.json(proposal))
