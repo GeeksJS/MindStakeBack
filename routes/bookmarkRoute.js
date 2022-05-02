@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
+const checkAuth = require('../middleware/check-auth');
+
 var BookmarkService = require('../Service/BookmarkService');
+router.use(checkAuth)
 
 router.post('/addBookmark/:idProject/:idUser', function (req, res, next) {
     BookmarkService.addBookmark(req.params.idProject,req.params.idUser);

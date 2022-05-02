@@ -9,6 +9,7 @@ const router = express.Router();
 
 
 
+
 router.post("/", async (req, res) => {
     try {
         const schema = Joi.object({ Email: Joi.string().email().required() });

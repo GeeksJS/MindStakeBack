@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var PackService = require('../Service/PackService');
+const checkAuth = require('../middleware/check-auth');
 
 /*begin Simple Crud Pack*/
 
 /* AddSimplePack */
+router.use(checkAuth)
+
 router.post('/addPack', function (req, res, next) {
   PackService.addPack(req.body);
   res.end()
