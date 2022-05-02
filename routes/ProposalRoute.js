@@ -18,6 +18,16 @@ router.post('/', (req, res) => {
         .catch(err => res.status(400).json({ error: err }));
 }
 );
+router.get('/getallproposalbystate', function (req, res, next) {
+    Proposal.aggregate([
+        {$group:{
+            _id: '$state',
+            count:{$sum:1}
+        }}
+    ]).then(data=>res.json(data))
+})
+
+
 router.get('/:id', (req, res) => { 
     Proposal.findById(req.params.id)
         .then(proposal => res.json(proposal))
@@ -52,10 +62,16 @@ router.put('/reject/:id', (req, res) => {
         .catch(err => res.status(404).json({ notfound: 'No proposal found' })); 
 }   //update proposal
 );
+
+
+
+
 router.delete('/:id', (req, res) => {   //delete proposal
     Proposal.findByIdAndDelete(req.params.id)
         .then(() => res.json({ success: true }))
         .catch(err => res.status(404).json({ notfound: 'No proposal found' }));
 }
 );
+
+
 module.exports = router;

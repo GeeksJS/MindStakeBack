@@ -54,6 +54,11 @@ router.get('/getallprojects', function (req, res, next) {
          ProjectService.getAllProjects().then(data=>res.json(data));
 });
 
+
+router.get('/getallprojectsbycategory', function (req, res, next) {
+        ProjectService.getAllProjectsByCategory().then(data=>res.json(data));
+});
+
 router.put('/updateprojectraised/:id', function (req, res, next) {
       
         ProjectService.updateProjectRaised(req,req.params.id);
