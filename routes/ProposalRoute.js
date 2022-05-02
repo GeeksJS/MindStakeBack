@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 }
 );
 router.get('/getallproposalbystate', function (req, res, next) {
-    Proposal.aggregate([
+    Proposal.aggregate([ 
         {$group:{
             _id: '$state',
             count:{$sum:1}
