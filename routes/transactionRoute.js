@@ -27,7 +27,8 @@ router.post('/add-donation', async (req, res) => {
         amount: req.body.amount,
         created: req.body.created,
         Sender: req.body.Sender,
-        Receiver: req.body.Receiver
+        Receiver: req.body.Receiver, 
+        Project: req.body.Project
     })
 
     donation.save();
@@ -86,6 +87,14 @@ router.get('/donations', async (req, res) => {
 
 
     const don = await Donation.find({})
+
+    res.json(don)
+
+});
+router.get('/donations-byProject/:idProject', async (req,res)=>{
+    const id = req.params.idProject
+
+    const don = await Donation.find({Project:id.toString()}).limit(3)
 
     res.json(don)
 

@@ -1,4 +1,5 @@
 var express = require('express');
+const checkAuth = require('../middleware/check-auth');
 
 const fileUpload = require('../middleware/image-upload');
 
@@ -8,9 +9,13 @@ var ProjectService = require('../Service/ProjectService');
 var Projectpack = require('../models/ProjectPack');
 var ProjectPackService = require('../Service/ProjectPackService');
 
+
+router.use(checkAuth)
 // Buy Pack For Project 
-router.post('/BuyPackForProject', function (req, res, next) {
-        ProjectPackService.buyPackForProject(req);
+router.post('/BuyPackForProject/:idPack/:idProject', function (req, res, next) {
+      const  idPack = req.params.idPack;
+      const  idProject= req.params.idProject;
+        ProjectPackService.buyPackForProject(idPack, idProject);
          res.end();
  });
 

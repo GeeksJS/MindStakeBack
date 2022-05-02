@@ -6,7 +6,7 @@ var proposal = new mongoose.Schema({
     ownerId:{ type: mongoose.Schema.Types.ObjectId, ref: 'users' },
     state : {
         type: String,
-        enum: ["Approved", "Waiting", "Rejected"],
+        enum: ["Approved", "Waiting", "Rejected", "Accepted"],
         default: 'Waiting'
     },
     object:{

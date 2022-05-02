@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var FeedbackService = require('../Service/FeedbackService');
+const checkAuth = require('../middleware/check-auth');
+
+router.use(checkAuth)
 
 router.post('/addComment/:idUser/:idProject', function (req, res, next) {
     FeedbackService.addComment( req , req.params.idUser , req.params.idProject )
