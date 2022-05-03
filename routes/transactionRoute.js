@@ -100,4 +100,12 @@ router.get('/donations-byProject/:idProject', async (req,res)=>{
 
 });
 
+router.get('/all-donations-byProject/:idProject', async (req,res)=>{
+    const id = req.params.idProject
+
+    const don = await Donation.find({Project:id.toString()}).count()
+
+    res.json(don)
+
+});
 module.exports = router;

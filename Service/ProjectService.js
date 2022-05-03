@@ -156,6 +156,11 @@ const getAllProjects = () => {
     return data
 }
 
+const getAllProjectsAdmin = () => {
+    const data =  Project.find({}).sort({"Level": -1});
+    return data
+}
+
 // const updateProject = (data, idProject) => {
 //     Project.findByIdAndUpdate({ _id: idProject.toString() }, data);
 // }
@@ -192,7 +197,7 @@ const getAllProjectsByCategory = () => {
 }
 
 
-module.exports = { addProject, deleteProject, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject, updateProjectRaised, getAllProjectsByCategory, getAllProjectsByPack };
+module.exports = { addProject, deleteProject,getAllProjectsAdmin, getProjectByID, getAllProjects, updateProject, getProjectByUser, approveProject, updateProjectRaised, getAllProjectsByCategory, getAllProjectsByPack };
 
 
 /*

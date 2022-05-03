@@ -96,16 +96,16 @@ async function signup(req, res) {
       let token;
       token = jwt.sign(
         { userId: createdUser._id },
-        'supersecret_dont_share',
-        { expiresIn: '1h' }
+        'supersecret_dont_share'
       );
+      
 
       createdUser.save();
 
       console.log(token)
 
       await sendEmail({
-        email: createdUser.Email, subject: "Accound activation", html: `
+        email: createdUser.Email, subject: "Account activation", html: `
    
         <!doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -704,8 +704,7 @@ async function login(req, res) {
   try {
     token = jwt.sign(
       { userId: existingUser._id, Email: existingUser.Email },
-      'supersecret_dont_share',
-      { expiresIn: '1h' }
+      'supersecret_dont_share'
     );
   } catch (err) {
     const error = new HttpError(

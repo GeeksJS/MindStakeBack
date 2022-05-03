@@ -24,6 +24,9 @@ var featureRouter = require('./routes/featureRoute');
 
 var feedbackRouter = require('./routes/feedbackRoute');
 
+var companiesRouter = require('./routes/companiesRoute');
+
+
 var transactionRouter = require('./routes/transactionRoute');
 
 
@@ -97,7 +100,7 @@ app.use('/features',featureRouter);
 app.use("/password-reset", passwordReset);
 app.use('/payment',transactionRouter);
 app.use('/proposal',proposalRouter);
-
+app.use('/company',companiesRouter);
 app.use('/blockchain',blockchainRouter);
 
 
