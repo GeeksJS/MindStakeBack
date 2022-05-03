@@ -24,7 +24,7 @@ router.post('/signup', fileUpload.any(), function (req, res) {
 router.post('/activate-account-email', function (req, res) {
   const userEmail = req.body.Email
  sendEmail({
-    email: userEmail, subject: "Accound activation", html: `
+    email: userEmail, subject: "Account activation", html: `
 
     <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">

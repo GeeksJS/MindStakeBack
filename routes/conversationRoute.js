@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Conversation = require("../models/Conversation");
+const mongoose = require("mongoose");
 
 //new conv
 
@@ -19,9 +20,10 @@ router.post("/", async(req, res) => {
 //get conv of a user
 
 router.get("/:userId", async(req, res) => {
+    console.log(req.params.userId)
     try {
         const conversation = await Conversation.find({
-            members: { $in: [req.params.userId] },
+            members: { $in: [mongoose.Types.ObjectId(req.params.userId)] },
         });
         res.status(200).json(conversation);
     } catch (err) {
