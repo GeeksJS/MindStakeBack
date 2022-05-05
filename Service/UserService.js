@@ -99,7 +99,7 @@ async function signup(req, res) {
         'supersecret_dont_share'
       );
       
-
+ 
       createdUser.save();
 
       console.log(token)
