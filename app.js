@@ -150,7 +150,7 @@ if (process.env.GENERATE_PEER_PORT === 'true') {
 
 
 }
-const PORT = PEER_PORT || process.env.PORT
+const PORT = PEER_PORT || process.env.PORT 
 app.listen( PORT , () => {
     console.log(`listening at localhost:${PORT}`);
     if( PORT !== PEER_PORT ){
