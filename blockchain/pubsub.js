@@ -12,8 +12,16 @@ class PubSub {
         this.blockchain = blockchain
         this.transactionPool = transactionPool
 
-        this.publisher = redis.createClient()
-        this.subscriber = redis.createClient()
+        this.publisher = redis.createClient({
+            host: "redis-19508.c14.us-east-1-3.ec2.cloud.redislabs.com",
+            port: 19508,
+            password: "lrDtbt5Yqw68nIFlYdEvD8nZmMJNIwxw"
+        })
+        this.subscriber = redis.createClient({
+            host: "redis-19508.c14.us-east-1-3.ec2.cloud.redislabs.com",
+            port: 19508,
+            password: "lrDtbt5Yqw68nIFlYdEvD8nZmMJNIwxw"
+        })
 
         this.subscribeToChannels()
 

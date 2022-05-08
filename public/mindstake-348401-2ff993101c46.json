@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mindstake-348401",
+  "private_key_id": "2ff993101c4602822ebc63f0adeb50e28a37b055",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQCeO3Te3rLwIhon\n+Az86mbtGBsAzxEn2Pgj8tX+jWn4pB1ig3GvJbp0xrsZ9J6vu0rVJLSUxtEw59O6\n4WQvSiiL2lGSfKSOqsI9YbB1P90nVJr5rnh9m0dUfRJDCC/pHrFPvaomRSk2zwV8\nHBgVt9v4NVDKJZ5NSMnt4Ss9wsnc0DzUezeJIWUZGZb3/rZ4lXkaztJ5tGE3Aocp\nfbZuzChXBHQ4O4JD9tuPppWpYMWoQKfn7+SrdLASYOJUKxl2mbGtx3cbhyfEYLCu\n0ZKTHD0Nw+5CRNocwDJ2cmG5CvwQdlreRCj/9FTPpmiYvUtXbPMNEkfrs7xl6Bbb\nxy5V4QqHAgMBAAECgf8zGFVPopolm4gsCpgnE4opBZ+yoyrnCH5tx/yni61XR6eK\n0uc4UkvjaZ5Ww1HQGAASKR18QrdKaOdLcXzocwn6HzA4HV0GCh4EXtycVVhqBZKw\nYvva6PQfqZjmtxNsM9JjQtuu1VEkYbVjs669/0uzhYPmbZSwtXsqADahEEV0XUdM\nfHuQDwwWLgnW+Zrrx3zNUqPt2QjqjZTvjO9BiJ4UisDnBxXUatIQmGF4h/4gGbwI\npnu4Ii28o1Q8t+hkH5v+urOqG9fgK06AprWpErcimdXbNC7L+V/f6eWG/OuhT6Up\no8u48ah0Jag+e/p6XyR7GNiD45nlMJyvc8dKv8ECgYEA3qW5o5ofZMKYiI4hRc/W\nEzP0CRSI4fYu+6m3/Q4pZRhAIxE0G+u1czJL8DsbI8v11tqMpsD2EIpcjBJseahM\n8tLdJ2frz/vhUhYszW59H04eHhjhYZIs/egfpOlY/kmPzkJ2+PV6q7X4mTD+XEWz\nNMFLRSf9WOQqg5+OaR7t06MCgYEAte98D6cjNZCjxAfCQX9MlaZo5ozy1alUETYS\ng0RY1PT7ip1iRslHpt8pyFKsdHjoJ1iVQOaFIf9LW838HF64GVOsSEne7oqGB973\nudr4yoXk30MS1XFQnEAC7gbDL3nL4+pnH29o/5xY0lKpmYIwmI8qIN5XD4eMhSuB\nqBI4O80CgYA3AjsbcLjQ7ENDedo+pVr+45cnpysqqOhyxTvwCc+wao1uHJIDU/lA\nvOyGLhRGg935d4XIrWQeMhErimHCrRJV7EM3uTVJ7bF91ny7RNElKufGB9+ne7Yi\nBXfMBts1+HbPPxyl5gCo7Ay/zJsLsSzVm+w86eRuUfEvE/zbfAjGgQKBgHuoSqpY\n75V4udaDb4UVAPi2IpaRNnwCmyEXn32Y9sfHuzB7yFBUfl7tT3jYuF5xz1ju3INA\nKzzwSEgduT2PI5ITTQXVL7DydibjZXztWCxO1UDqVeK9Ig0RdOxTrFaYcfx3VaAI\nGVWi7rwFc0DjPCR1Ki0s8f+cIeZhq76Qo6gBAoGAZ6uRLynQk4OBjDTzEAdbcqN5\nEUeDYk2p+C4A3e/d3b6w1YPrX16/KI8MqSRkYdyDG3/ckpjh7w5CVCSuH+hibj6N\nrtopSZCOIYkwQzVdlhcHQ+AtAj7SMSD3fzYT8zmIxtggSHIchlH4Az5D8rSiFIPt\ner7pZKTJH6EYqMleybs=\n-----END PRIVATE KEY-----\n",
+  "client_email": "mindstakemulter@mindstake-348401.iam.gserviceaccount.com",
+  "client_id": "115058355651312157503",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mindstakemulter%40mindstake-348401.iam.gserviceaccount.com"
+}
