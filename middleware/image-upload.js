@@ -46,7 +46,7 @@ const fileUpload =
       autoRetry: true,
       bucket: 'mindstake_bucket',
       projectId: 'mindstake-348401',
-      keyFilename: '/Users/achrefbaraketi/Downloads/mindstake-348401-2ff993101c46.json',
+      keyFilename: 'public/mindstake-348401-2ff993101c46.json',
       filename: (req, file, cb)=>{
         const ext = (TYPE_IMAGE[file.mimetype]) ? TYPE_IMAGE[file.mimetype] :
                   TYPE_File[file.mimetype] ? TYPE_File[file.mimetype] :
