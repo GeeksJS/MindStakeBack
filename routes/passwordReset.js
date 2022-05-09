@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
             }).save();
         }
 
-        const link = `http://localhost:3000/password-reset/${user._id}/${token.token}`;
+        const link = `https://mindstakeback.herokuapp.com/password-reset/${user._id}/${token.token}`;
         await sendEmail({
             email: user.Email, subject: "Password reset", html: `
        
