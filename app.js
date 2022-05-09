@@ -121,7 +121,7 @@ app.use(function(err, req, res, next) {
 });
 const blockchain = new Blockchain();
 const syncWithRootState = () => {
-    request({ url: 'http://localhost:3000/blockchain/blocks' }, (error, response, body) => {
+    request({ url: 'https://mindstakeback.herokuapp.com/blockchain/blocks' }, (error, response, body) => {
          if (!error && response.statusCode === 200) {
             const rootChain = JSON.parse(body); 
             console.log('replace chain on a sync with', rootChain);
@@ -129,7 +129,7 @@ const syncWithRootState = () => {
            }
     });
 
-    request({ url: `http://localhost:3000/blockchain/transaction-pool-map` }, (error, response, body) => {
+    request({ url: `https://mindstakeback.herokuapp.com/blockchain/transaction-pool-map` }, (error, response, body) => {
         if (!error && response.statusCode === 200) {
           const rootTransactionPoolMap = JSON.parse(body);
     

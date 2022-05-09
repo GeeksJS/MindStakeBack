@@ -8,7 +8,10 @@ var Project = require('../models/Project');
 var ProjectService = require('../Service/ProjectService');
 var Projectpack = require('../models/ProjectPack');
 var ProjectPackService = require('../Service/ProjectPackService');
-
+// get list of projects
+router.get('/getallprojects', function (req, res, next) {
+        ProjectService.getAllProjects().then(data => res.json(data));
+});
 
 router.use(checkAuth)
 // Buy Pack For Project 
@@ -54,10 +57,7 @@ router.get('/getproject/:id', function (req, res, next) {
 
 
 
-// get list of projects
-router.get('/getallprojects', function (req, res, next) {
-        ProjectService.getAllProjects().then(data => res.json(data));
-});
+
 
 router.get('/getallprojectsadmin', function (req, res, next) {
         ProjectService.getAllProjectsAdmin().then(data => res.json(data));

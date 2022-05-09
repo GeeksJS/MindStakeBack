@@ -11,7 +11,10 @@ const Token = require('../models/token')
 const sendEmail = require("../util/sendEmail");
 const checkAuth = require('../middleware/check-auth');
 
-
+/*find User By Id*/
+router.get('/:id', function (req, res, next) {
+  UserService.displayUserById(req.params.id).then(data => res.json(data));
+});
 
 router.post('/signup', fileUpload.any(), function (req, res) {
   console.log("file" + req.files[0].filename)
@@ -702,10 +705,7 @@ router.get('/', function (req, res, next) {
   UserService.displayAllUser().then(data => res.json(data));
 });
 
-/*find User By Id*/
-router.get('/:id', function (req, res, next) {
-  UserService.displayUserById(req.params.id).then(data => res.json(data));
-});
+
 
 
 
