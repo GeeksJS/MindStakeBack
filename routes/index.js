@@ -13,7 +13,7 @@ const headers = {
 };
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.json("hello");
 });
 
 async function getRoom(room) {
