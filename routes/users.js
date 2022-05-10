@@ -11,10 +11,20 @@ const Token = require('../models/token')
 const sendEmail = require("../util/sendEmail");
 const checkAuth = require('../middleware/check-auth');
 
-/*find User By Id*/
-router.get('/:id', function (req, res, next) {
-  UserService.displayUserById(req.params.id).then(data => res.json(data));
+/* AddSimpleUser */
+router.post('/addUser', function (req, res, next) {
+  UserService.addUser(req.body);
 });
+/* find All Admins*/
+router.get('/admins', function (req, res, next) {
+  UserService.displayAllAdmin().then(data => res.json(data));
+});
+
+/* find All users except admin*/
+router.get('/users', function (req, res, next) {
+  UserService.displayAllUsersExceptAdmin().then(data => res.json(data));
+});
+
 
 router.post('/signup', fileUpload.any(), function (req, res) {
   console.log("file" + req.files[0].filename)
@@ -613,14 +623,14 @@ router.post('/facebooklogin', function (req, res, next) {
   UserService.LoginWithFacebook(req, res, next);
 });
 
-
+/*find User By Id*/
+router.get('/:id', function (req, res, next) {
+  UserService.displayUserById(req.params.id).then(data => res.json(data));
+});
 
 router.use(checkAuth)
 
-/* AddSimpleUser */
-router.post('/addUser', function (req, res, next) {
-  UserService.addUser(req.body);
-});
+
 
 
 
@@ -690,15 +700,7 @@ router.delete('/delete/:id', function (req, res, next) {
   UserService.deleteUserById(id);
 });
 
-/* find All Admins*/
-router.get('/admins', function (req, res, next) {
-  UserService.displayAllAdmin().then(data => res.json(data));
-});
 
-/* find All users except admin*/
-router.get('/users', function (req, res, next) {
-  UserService.displayAllUsersExceptAdmin().then(data => res.json(data));
-});
 
 /* find All Users*/
 router.get('/', function (req, res, next) {

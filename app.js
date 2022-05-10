@@ -43,7 +43,7 @@ var messageRoute = require('./routes/messageRoute');
 
 //Database acccess
 var mongoose = require('mongoose');
-mongoose.connect(process.env.DATA_BASE_URL, {autoIndex: false, useNewUrlParser: true, useUnifiedTopology: true },
+mongoose.connect("mongodb+srv://mindstake:Achref@99@cluster0.wpuyj.mongodb.net/mindstake", {autoIndex: false, useNewUrlParser: true, useUnifiedTopology: true },
     () => console.log("success connection with DB"));
  
 mongoose.set('useFindAndModify', false);
